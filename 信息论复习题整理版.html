@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>信息论复习题整理版</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <style>
+  :root {
+    --paper: #fbf8f1;
+    --ink: #1f2933;
+    --muted: #5f6c7b;
+    --rule: #d7c9ad;
+    --accent: #8c3b1f;
+    --accent-soft: #f1e2cf;
+    --note: #eef3f7;
+    --answer: #f3efe8;
+    --literal: #f6f1e8;
+    --table-head: #efe4d2;
+  }
+
+  html {
+    background:
+      radial-gradient(circle at top left, rgba(197, 145, 92, 0.12), transparent 26%),
+      linear-gradient(180deg, #f4efe5 0%, #f9f6ef 22%, #fcfbf7 100%);
+    color: var(--ink);
+  }
+
+  body {
+    margin: 0 auto;
+    max-width: 980px;
+    padding: 40px 28px 72px;
+    font-family: "STIX Two Text", "Noto Serif SC", Georgia, "Times New Roman", serif;
+    line-height: 1.75;
+  }
+
+  header {
+    margin-bottom: 2.5rem;
+    text-align: left;
+  }
+
+  h1, h2, h3, h4 {
+    color: #2a1e12;
+    line-height: 1.3;
+  }
+
+  h1 {
+    font-size: 2.3rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 3px solid var(--rule);
+  }
+
+  h2 {
+    margin-top: 2.6rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(140, 59, 31, 0.2);
+  }
+
+  h3 {
+    margin-top: 1.7rem;
+    color: #6f2f18;
+  }
+
+  #TOC {
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(140, 59, 31, 0.14);
+    border-radius: 18px;
+    padding: 1.2rem 1.35rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 14px 32px rgba(64, 42, 22, 0.06);
+    backdrop-filter: blur(6px);
+  }
+
+  #TOC a {
+    color: #6d2f1a;
+    text-decoration: none;
+  }
+
+  #TOC a:hover {
+    text-decoration: underline;
+  }
+
+  p code, li code {
+    background: rgba(140, 59, 31, 0.08);
+    border-radius: 0.35rem;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.95em;
+  }
+
+  blockquote {
+    margin: 1.1rem 0;
+    padding: 0.9rem 1rem;
+    background: rgba(255, 255, 255, 0.66);
+    border-left: 4px solid var(--accent);
+    color: var(--muted);
+  }
+
+  .formula-block {
+    margin: 1.1rem 0 1.25rem;
+    padding: 0.9rem 1rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(247, 241, 229, 0.92));
+    border: 1px solid rgba(140, 59, 31, 0.14);
+    border-left: 4px solid var(--accent);
+    border-radius: 14px;
+    overflow-x: auto;
+    box-shadow: 0 10px 28px rgba(84, 53, 28, 0.06);
+  }
+
+  .formula-block p {
+    margin: 0;
+  }
+
+  math[display="block"] {
+    margin: 0 auto;
+  }
+
+  .note-block,
+  .answer-block {
+    margin: 1rem 0;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+  }
+
+  .note-block {
+    background: var(--note);
+    border: 1px solid rgba(72, 107, 135, 0.14);
+  }
+
+  .answer-block {
+    background: var(--answer);
+    border: 1px solid rgba(140, 59, 31, 0.12);
+    font-weight: 600;
+  }
+
+  .note-block p,
+  .answer-block p {
+    margin: 0;
+  }
+
+  .literal-block {
+    margin: 1rem 0;
+  }
+
+  .literal-block pre {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    white-space: pre-wrap;
+    background: var(--literal);
+    border: 1px solid rgba(140, 59, 31, 0.12);
+    border-radius: 14px;
+    color: #3f3429;
+    font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.4rem;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(64, 42, 22, 0.05);
+  }
+
+  thead th {
+    background: var(--table-head);
+  }
+
+  th, td {
+    padding: 0.7rem 0.8rem;
+    border: 1px solid rgba(117, 90, 59, 0.16);
+    text-align: center;
+  }
+
+  tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.58);
+  }
+
+  tbody tr:nth-child(odd) {
+    background: rgba(250, 246, 239, 0.92);
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid rgba(140, 59, 31, 0.18);
+    margin: 2rem 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 720px) {
+    body {
+      padding: 22px 16px 48px;
+    }
+
+    h1 {
+      font-size: 1.85rem;
+    }
+
+    #TOC {
+      padding: 1rem;
+    }
+  }
+
+  @media print {
+    html {
+      background: #fff;
+    }
+
+    body {
+      max-width: none;
+      padding: 0;
+      background: #fff;
+    }
+
+    #TOC,
+    .formula-block,
+    .note-block,
+    .answer-block,
+    .literal-block pre,
+    table {
+      box-shadow: none;
+    }
+  }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">信息论复习题整理版</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#信息论复习题满分复习文档-full-mark-review-notes-for-information-theory"
+id="toc-信息论复习题满分复习文档-full-mark-review-notes-for-information-theory">信息论复习题满分复习文档
+/ Full-Mark Review Notes for Information Theory</a>
+<ul>
+<li><a href="#考前总策略-exam-strategy"
+id="toc-考前总策略-exam-strategy">0. 考前总策略 / Exam Strategy</a></li>
+</ul></li>
+<li><a href="#必背概念题-must-memorize-concepts"
+id="toc-必背概念题-must-memorize-concepts">1. 必背概念题 / Must-Memorize
+Concepts</a>
+<ul>
+<li><a href="#shannon-通信系统-shannon-communication-system"
+id="toc-shannon-通信系统-shannon-communication-system">1.1 Shannon
+通信系统 / Shannon Communication System</a></li>
+<li><a href="#自信息-self-information"
+id="toc-自信息-self-information">1.2 自信息 / Self-Information</a></li>
+<li><a href="#熵-entropy" id="toc-熵-entropy">1.3 熵 / Entropy</a></li>
+<li><a
+href="#单个互信息与平均互信息-mutual-information-vs-average-mutual-information"
+id="toc-单个互信息与平均互信息-mutual-information-vs-average-mutual-information">1.4
+单个互信息与平均互信息 / Mutual Information vs Average Mutual
+Information</a></li>
+<li><a href="#联合熵与条件熵-joint-entropy-and-conditional-entropy"
+id="toc-联合熵与条件熵-joint-entropy-and-conditional-entropy">1.5
+联合熵与条件熵 / Joint Entropy and Conditional Entropy</a></li>
+<li><a href="#n-次扩展信源熵-entropy-of-n-th-extension-source"
+id="toc-n-次扩展信源熵-entropy-of-n-th-extension-source">1.6 N
+次扩展信源熵 / Entropy of N-th Extension Source</a></li>
+<li><a href="#极限熵-limiting-entropy-or-ultimate-entropy"
+id="toc-极限熵-limiting-entropy-or-ultimate-entropy">1.7 极限熵 /
+Limiting Entropy or Ultimate Entropy</a></li>
+<li><a href="#率失真函数端点-endpoints-of-rate-distortion-function"
+id="toc-率失真函数端点-endpoints-of-rate-distortion-function">1.8
+率失真函数端点 / Endpoints of Rate-Distortion Function</a></li>
+<li><a href="#信道容量范围-range-of-channel-capacity"
+id="toc-信道容量范围-range-of-channel-capacity">1.9 信道容量范围 / Range
+of Channel Capacity</a></li>
+</ul></li>
+<li><a href="#dms-噪声信道计算题-dms-and-noisy-channel-calculation"
+id="toc-dms-噪声信道计算题-dms-and-noisy-channel-calculation">2. DMS +
+噪声信道计算题 / DMS and Noisy Channel Calculation</a>
+<ul>
+<li><a href="#标准步骤-standard-procedure"
+id="toc-标准步骤-standard-procedure">2.1 标准步骤 / Standard
+Procedure</a></li>
+<li><a href="#复习题原型-review-problem-prototype"
+id="toc-复习题原型-review-problem-prototype">2.2 复习题原型 / Review
+Problem Prototype</a>
+<ul>
+<li><a href="#a-self-information" id="toc-a-self-information">a)
+Self-information</a></li>
+<li><a href="#b-source-entropy-hx" id="toc-b-source-entropy-hx">b)
+Source entropy H(X)</a></li>
+<li><a href="#c-marginal-distribution-and-entropy-of-y"
+id="toc-c-marginal-distribution-and-entropy-of-y">c) Marginal
+distribution and entropy of Y</a></li>
+<li><a href="#d-joint-distribution-and-joint-entropy"
+id="toc-d-joint-distribution-and-joint-entropy">d) Joint distribution
+and joint entropy</a></li>
+<li><a href="#e-average-mutual-information"
+id="toc-e-average-mutual-information">e) Average mutual
+information</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#二阶-markov-信源-binary-2-step-markov-source"
+id="toc-二阶-markov-信源-binary-2-step-markov-source">3. 二阶 Markov
+信源 / Binary 2-Step Markov Source</a>
+<ul>
+<li><a href="#状态定义-state-definition"
+id="toc-状态定义-state-definition">3.1 状态定义 / State
+Definition</a></li>
+<li><a href="#复习题原型-review-problem-prototype-1"
+id="toc-复习题原型-review-problem-prototype-1">3.2 复习题原型 / Review
+Problem Prototype</a>
+<ul>
+<li><a href="#a-状态转移图-state-transition-graph"
+id="toc-a-状态转移图-state-transition-graph">a) 状态转移图 / State
+Transition Graph</a></li>
+<li><a href="#b-状态转移矩阵-state-transition-matrix"
+id="toc-b-状态转移矩阵-state-transition-matrix">b) 状态转移矩阵 / State
+Transition Matrix</a></li>
+<li><a href="#c-平稳分布-stationary-distribution"
+id="toc-c-平稳分布-stationary-distribution">c) 平稳分布 / Stationary
+Distribution</a></li>
+<li><a href="#d-极限符号分布-limiting-symbol-distribution"
+id="toc-d-极限符号分布-limiting-symbol-distribution">d) 极限符号分布 /
+Limiting Symbol Distribution</a></li>
+</ul></li>
+<li><a
+href="#markov-链平稳分布通用模板-general-template-for-stationary-distribution"
+id="toc-markov-链平稳分布通用模板-general-template-for-stationary-distribution">3.3
+Markov 链平稳分布通用模板 / General Template for Stationary
+Distribution</a></li>
+<li><a href="#markov-极限熵-limiting-entropy-of-a-markov-chain"
+id="toc-markov-极限熵-limiting-entropy-of-a-markov-chain">3.4 Markov
+极限熵 / Limiting Entropy of a Markov Chain</a></li>
+</ul></li>
+<li><a href="#jensen-shannon-divergence-与-markov-综合题"
+id="toc-jensen-shannon-divergence-与-markov-综合题">4. Jensen-Shannon
+Divergence 与 Markov 综合题</a>
+<ul>
+<li><a href="#js-散度公式-jensen-shannon-divergence"
+id="toc-js-散度公式-jensen-shannon-divergence">4.1 JS 散度公式 /
+Jensen-Shannon Divergence</a></li>
+<li><a href="#复习题原型-review-problem-prototype-2"
+id="toc-复习题原型-review-problem-prototype-2">4.2 复习题原型 / Review
+Problem Prototype</a>
+<ul>
+<li><a href="#a-js-divergence" id="toc-a-js-divergence">a) JS
+divergence</a></li>
+<li><a href="#b-stationary-distribution"
+id="toc-b-stationary-distribution">b) Stationary distribution</a></li>
+<li><a href="#c-limiting-entropy" id="toc-c-limiting-entropy">c)
+Limiting entropy</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#离散信道与信道容量-discrete-channel-and-channel-capacity"
+id="toc-离散信道与信道容量-discrete-channel-and-channel-capacity">5.
+离散信道与信道容量 / Discrete Channel and Channel Capacity</a>
+<ul>
+<li><a href="#基本公式-basic-formula"
+id="toc-基本公式-basic-formula">5.1 基本公式 / Basic Formula</a></li>
+<li><a href="#对称信道-symmetric-channel"
+id="toc-对称信道-symmetric-channel">5.2 对称信道 / Symmetric
+Channel</a></li>
+<li><a href="#准对称信道-quasi-symmetric-channel"
+id="toc-准对称信道-quasi-symmetric-channel">5.3 准对称信道 /
+Quasi-Symmetric Channel</a></li>
+<li><a href="#医疗-ai-准对称信道题-medical-ai-quasi-symmetric-channel"
+id="toc-医疗-ai-准对称信道题-medical-ai-quasi-symmetric-channel">5.4
+医疗 AI 准对称信道题 / Medical AI Quasi-Symmetric Channel</a>
+<ul>
+<li><a href="#与-0.7-对调时-if-0.2-and-0.7-are-swapped"
+id="toc-与-0.7-对调时-if-0.2-and-0.7-are-swapped">0.2 与 0.7 对调时 / If
+0.2 and 0.7 are swapped</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#率失真函数-rate-distortion-function"
+id="toc-率失真函数-rate-distortion-function">6. 率失真函数 /
+Rate-Distortion Function</a>
+<ul>
+<li><a href="#必背公式-must-memorize-formula"
+id="toc-必背公式-must-memorize-formula">6.1 必背公式 / Must-Memorize
+Formula</a></li>
+</ul></li>
+<li><a href="#shannon-fano-fenno-coding-与-huffman-coding"
+id="toc-shannon-fano-fenno-coding-与-huffman-coding">7. Shannon-Fano /
+Fenno Coding 与 Huffman Coding</a>
+<ul>
+<li><a href="#平均码长-average-code-length"
+id="toc-平均码长-average-code-length">7.1 平均码长 / Average Code
+Length</a></li>
+<li><a href="#编码效率-coding-efficiency"
+id="toc-编码效率-coding-efficiency">7.2 编码效率 / Coding
+Efficiency</a></li>
+<li><a href="#shannon-fano-编码步骤-shannon-fano-coding-procedure"
+id="toc-shannon-fano-编码步骤-shannon-fano-coding-procedure">7.3
+Shannon-Fano 编码步骤 / Shannon-Fano Coding Procedure</a></li>
+<li><a href="#huffman-编码步骤-huffman-coding-procedure"
+id="toc-huffman-编码步骤-huffman-coding-procedure">7.4 Huffman 编码步骤
+/ Huffman Coding Procedure</a></li>
+<li><a href="#复习题原型-1五符号-dms-review-prototype-1-five-symbol-dms"
+id="toc-复习题原型-1五符号-dms-review-prototype-1-five-symbol-dms">7.5
+复习题原型 1：五符号 DMS / Review Prototype 1: Five-Symbol DMS</a>
+<ul>
+<li><a href="#shannon-fano-fenno-code"
+id="toc-shannon-fano-fenno-code">Shannon-Fano / Fenno code</a></li>
+<li><a href="#huffman-code" id="toc-huffman-code">Huffman code</a></li>
+</ul></li>
+<li><a
+href="#复习题原型-2传感器四符号-huffman-review-prototype-2-four-symbol-sensor-huffman"
+id="toc-复习题原型-2传感器四符号-huffman-review-prototype-2-four-symbol-sensor-huffman">7.6
+复习题原型 2：传感器四符号 Huffman / Review Prototype 2: Four-Symbol
+Sensor Huffman</a></li>
+</ul></li>
+<li><a href="#线性分组码-linear-block-coding"
+id="toc-线性分组码-linear-block-coding">8. 线性分组码 / Linear Block
+Coding</a>
+<ul>
+<li><a href="#基本概念-basic-concepts"
+id="toc-基本概念-basic-concepts">8.1 基本概念 / Basic Concepts</a></li>
+<li><a href="#gf2-运算-operations-over-gf2"
+id="toc-gf2-运算-operations-over-gf2">8.2 GF(2) 运算 / Operations over
+GF(2)</a></li>
+<li><a href="#监督矩阵-parity-check-matrix"
+id="toc-监督矩阵-parity-check-matrix">8.3 监督矩阵 / Parity-Check
+Matrix</a></li>
+<li><a
+href="#hamming-距离与检错纠错-hamming-distance-error-detection-and-correction"
+id="toc-hamming-距离与检错纠错-hamming-distance-error-detection-and-correction">8.4
+Hamming 距离与检错纠错 / Hamming Distance, Error Detection and
+Correction</a></li>
+<li><a href="#syndrome-译码-syndrome-decoding"
+id="toc-syndrome-译码-syndrome-decoding">8.5 Syndrome 译码 / Syndrome
+Decoding</a></li>
+<li><a href="#复习题原型-163-线性分组码-review-prototype-1-63-lbc"
+id="toc-复习题原型-163-线性分组码-review-prototype-1-63-lbc">8.6
+复习题原型 1：(6,3) 线性分组码 / Review Prototype 1: (6,3) LBC</a>
+<ul>
+<li><a href="#a-encode-m100" id="toc-a-encode-m100">a) Encode
+M=(100)</a></li>
+<li><a href="#b-parity-check-matrix-h"
+id="toc-b-parity-check-matrix-h">b) Parity-check matrix H</a></li>
+<li><a href="#c-received-code-w101111-error-weight-2"
+id="toc-c-received-code-w101111-error-weight-2">c) Received code
+w=(101111), error weight &lt; 2</a></li>
+<li><a href="#d-全部码字-all-codewords"
+id="toc-d-全部码字-all-codewords">d) 全部码字 / All codewords</a></li>
+</ul></li>
+<li><a
+href="#复习题原型-2另一道-63-线性分组码-review-prototype-2-another-63-lbc"
+id="toc-复习题原型-2另一道-63-线性分组码-review-prototype-2-another-63-lbc">8.7
+复习题原型 2：另一道 (6,3) 线性分组码 / Review Prototype 2: Another
+(6,3) LBC</a></li>
+</ul></li>
+<li><a
+href="#天气-健康综合题-weather-health-entropy-and-mutual-information"
+id="toc-天气-健康综合题-weather-health-entropy-and-mutual-information">9.
+天气-健康综合题 / Weather-Health Entropy and Mutual Information</a>
+<ul>
+<li><a href="#题型-problem-type" id="toc-题型-problem-type">9.1 题型 /
+Problem Type</a></li>
+<li><a href="#复习题标准答案-standard-answer"
+id="toc-复习题标准答案-standard-answer">9.2 复习题标准答案 / Standard
+Answer</a></li>
+</ul></li>
+<li><a
+href="#选择题与填空题标准答案-standard-answers-for-objective-questions"
+id="toc-选择题与填空题标准答案-standard-answers-for-objective-questions">10.
+选择题与填空题标准答案 / Standard Answers for Objective Questions</a>
+<ul>
+<li><a href="#single-choice-questions"
+id="toc-single-choice-questions">10.1 Single-Choice Questions</a>
+<ul>
+<li><a href="#q1" id="toc-q1">Q1</a></li>
+<li><a href="#q2" id="toc-q2">Q2</a></li>
+<li><a href="#q3" id="toc-q3">Q3</a></li>
+</ul></li>
+<li><a href="#completion-questions" id="toc-completion-questions">10.2
+Completion Questions</a>
+<ul>
+<li><a href="#a" id="toc-a">a)</a></li>
+<li><a href="#b" id="toc-b">b)</a></li>
+<li><a href="#c" id="toc-c">c)</a></li>
+<li><a href="#d" id="toc-d">d)</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#英文考试答题模板-english-answer-templates"
+id="toc-英文考试答题模板-english-answer-templates">11. 英文考试答题模板
+/ English Answer Templates</a>
+<ul>
+<li><a href="#entropy-calculation" id="toc-entropy-calculation">11.1
+Entropy Calculation</a></li>
+<li><a href="#joint-entropy-calculation"
+id="toc-joint-entropy-calculation">11.2 Joint Entropy
+Calculation</a></li>
+<li><a href="#mutual-information-calculation"
+id="toc-mutual-information-calculation">11.3 Mutual Information
+Calculation</a></li>
+<li><a href="#markov-stationary-distribution"
+id="toc-markov-stationary-distribution">11.4 Markov Stationary
+Distribution</a></li>
+<li><a href="#markov-limiting-entropy"
+id="toc-markov-limiting-entropy">11.5 Markov Limiting Entropy</a></li>
+<li><a href="#symmetric-channel-capacity"
+id="toc-symmetric-channel-capacity">11.6 Symmetric Channel
+Capacity</a></li>
+<li><a href="#quasi-symmetric-channel-capacity"
+id="toc-quasi-symmetric-channel-capacity">11.7 Quasi-Symmetric Channel
+Capacity</a></li>
+<li><a href="#huffman-coding" id="toc-huffman-coding">11.8 Huffman
+Coding</a></li>
+<li><a href="#linear-block-coding" id="toc-linear-block-coding">11.9
+Linear Block Coding</a></li>
+<li><a href="#error-detection-ability"
+id="toc-error-detection-ability">11.10 Error Detection Ability</a></li>
+</ul></li>
+<li><a href="#最后一页速记-one-page-cheat-sheet"
+id="toc-最后一页速记-one-page-cheat-sheet">12. 最后一页速记 / One-Page
+Cheat Sheet</a></li>
+<li><a
+href="#复习题数值答案汇总-numerical-answers-from-the-review-sheet"
+id="toc-复习题数值答案汇总-numerical-answers-from-the-review-sheet">13.
+复习题数值答案汇总 / Numerical Answers from the Review Sheet</a></li>
+</ul>
+</nav>
+<blockquote>
+<p>本页依据 <code>信息论复习题满分复习文档.docx</code> 与
+<code>复习题-2026 2.docx</code>
+整理，主内容采用整理稿，并将可识别的公式统一规范为数学排版。</p>
+</blockquote>
+<h1
+id="信息论复习题满分复习文档-full-mark-review-notes-for-information-theory">信息论复习题满分复习文档
+/ Full-Mark Review Notes for Information Theory</h1>
+<blockquote>
+<p>范围说明 / Scope: 本文只围绕 <code>复习题-2026 2.docx</code>
+中出现的知识点、题型和标准答案整理。考试是英文题目，所以每个知识点都给出英文答题表达。</p>
+</blockquote>
+<blockquote>
+<p>统一约定 / Convention: 若无特别说明，所有对数均为以 2 为底，单位为
+bit 或 bit/symbol.</p>
+</blockquote>
+<hr />
+<h2 id="考前总策略-exam-strategy">0. 考前总策略 / Exam Strategy</h2>
+<p>中文：</p>
+<ol type="1">
+<li>选择填空题要背“概念边界”：自信息随概率增大而减小；平均互信息非负；单个互信息可以为负；率失真端点；信道容量范围；极限熵不大于各阶平均符号熵。</li>
+<li>大题基本都是同一套路：先列概率分布，再代入熵、互信息、容量或编码公式。</li>
+<li>计算题必须写过程：概率、公式、代入、结果、单位。只写结果容易丢过程分。</li>
+<li>线性分组码所有运算都在 GF(2) 上，即加法为模 2 加法。</li>
+<li>Huffman/Fano 编码的 0/1
+可以整体互换，但平均码长和效率必须一致。若题目给了“unique Huffman
+coding”，优先按复习题里的码字口径写。</li>
+</ol>
+<p>English:</p>
+<ol type="1">
+<li>For short questions, memorize the conceptual boundaries:
+self-information decreases as probability increases; average mutual
+information is non-negative; pointwise mutual information may be
+negative; the endpoints of the rate-distortion function; the range of
+channel capacity; the limiting entropy is not greater than finite-order
+average symbol entropies.</li>
+<li>For calculation problems, always list the probability distribution
+first, then apply the formula.</li>
+<li>Show probability, formula, substitution, numerical result, and
+unit.</li>
+<li>For linear block codes, all additions are modulo-2 operations over
+GF(2).</li>
+<li>For Huffman/Fano coding, exchanging all 0 and 1 labels gives an
+equivalent code. Use the code pattern in the review sheet when
+possible.</li>
+</ol>
+<hr />
+<h1 id="必背概念题-must-memorize-concepts">1. 必背概念题 / Must-Memorize
+Concepts</h1>
+<h2 id="shannon-通信系统-shannon-communication-system">1.1 Shannon
+通信系统 / Shannon Communication System</h2>
+<p>中文答案：</p>
+<p>Shannon 通信系统的基本组成包括：信源、信道、信宿。</p>
+<p>English answer:</p>
+<p>The components of the Shannon communication system include
+<strong>source, channel, and destination</strong>.</p>
+<p>常见填空：</p>
+<p><code>source, channel, destination</code></p>
+<hr />
+<h2 id="自信息-self-information">1.2 自信息 / Self-Information</h2>
+<p>公式 / Formula:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mi>/</mi><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+I(x_i) = -\log P(x_i) = \log (1 / P(x_i))
+</annotation></semantics></math></p>
+</div>
+<p>中文：</p>
+<p>某事件概率越大，不确定性越小，自信息越小；概率越小，不确定性越大，自信息越大。</p>
+<p>English:</p>
+<p>As the probability of an event increases, its self-information
+<strong>decreases</strong>. A less probable event carries more
+information.</p>
+<p>必背句：</p>
+<div class="literal-block">
+<pre class="text"><code>As the probability of a certain event increases, its self-information decreases.</code></pre>
+</div>
+<p>特殊值 / Special cases:</p>
+<div class="literal-block">
+<pre class="text"><code>P(x)=1  -&gt; I(x)=0
+P(x) smaller -&gt; I(x) larger</code></pre>
+</div>
+<hr />
+<h2 id="熵-entropy">1.3 熵 / Entropy</h2>
+<p>公式 / Formula:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><munder><mo>∑</mo><mi>i</mi></munder><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H(X) &amp;= - \sum_{i} p(x_i) \log p(x_i) \\
+&amp;= \sum_{i} p(x_i) I(x_i)\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>中文：</p>
+<p>熵是平均自信息，表示信源平均不确定性。</p>
+<p>English:</p>
+<p>Entropy is the average self-information of a source, measuring the
+average uncertainty of the source.</p>
+<p>常用数值 / Useful values:</p>
+<div class="literal-block">
+<pre class="text"><code>log 2 = 1
+log 3 = 1.5850
+log 4 = 2
+
+-0.5 log 0.5 = 0.5
+-0.4 log 0.4 = 0.5288
+-0.3 log 0.3 = 0.5211
+-0.2 log 0.2 = 0.4644
+-0.1 log 0.1 = 0.3322</code></pre>
+</div>
+<hr />
+<h2
+id="单个互信息与平均互信息-mutual-information-vs-average-mutual-information">1.4
+单个互信息与平均互信息 / Mutual Information vs Average Mutual
+Information</h2>
+<p>单个互信息 / Pointwise mutual information:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>;</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">[</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
+I(x_i; y_j) = \log [ p(x_i, y_j) / (p(x_i)p(y_j)) ]
+</annotation></semantics></math></p>
+</div>
+<p>平均互信息 / Average mutual information:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><munder><mo>∑</mo><mi>j</mi></munder><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">[</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo>∣</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}I(X;Y) &amp;= \sum_{i} \sum_{j} p(x_i,y_j) \log [ p(x_i,y_j) / (p(x_i)p(y_j)) ] \\
+&amp;= H(X) + H(Y) - H(X,Y) \\
+&amp;= H(X) - H(X\mid Y) \\
+&amp;= H(Y) - H(Y\mid X)\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>中文：</p>
+<p>平均互信息一定非负；单个互信息在某些条件下可以为负。</p>
+<p>English:</p>
+<p>The average mutual information is always non-negative, while
+pointwise mutual information can be negative under certain
+conditions.</p>
+<p>选择题高频答案：</p>
+<div class="answer-block">
+<p>The mutual information can be negative in certain condition.</p>
+</div>
+<p>注意：</p>
+<p>这里题目里的 <code>mutual information</code> 指单个事件互信息，不是
+average mutual information.</p>
+<hr />
+<h2 id="联合熵与条件熵-joint-entropy-and-conditional-entropy">1.5
+联合熵与条件熵 / Joint Entropy and Conditional Entropy</h2>
+<p>联合熵 / Joint entropy:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>−</mi><munder><mo>∑</mo><mi>i</mi></munder><munder><mo>∑</mo><mi>j</mi></munder><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H(X,Y) = - \sum_{i} \sum_{j} p(x_i,y_j) \log p(x_i,y_j)
+</annotation></semantics></math></p>
+</div>
+<p>条件熵 / Conditional entropy:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo>∣</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><munder><mo>∑</mo><mi>i</mi></munder><munder><mo>∑</mo><mi>j</mi></munder><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>j</mi></msub><mo>∣</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><munder><mo>∑</mo><mi>i</mi></munder><munder><mo>∑</mo><mi>j</mi></munder><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>∣</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H(Y\mid X) &amp;= - \sum_{i} \sum_{j} p(x_i,y_j) \log p(y_j\mid x_i) \\
+H(X\mid Y) &amp;= - \sum_{i} \sum_{j} p(x_i,y_j) \log p(x_i\mid y_j)\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>常用关系 / Useful identities:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo>∣</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H(X,Y) &amp;= H(X) + H(Y\mid X) \\
+H(X,Y) &amp;= H(Y) + H(X\mid Y) \\
+I(X;Y) &amp;= H(X) + H(Y) - H(X,Y)\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<hr />
+<h2 id="n-次扩展信源熵-entropy-of-n-th-extension-source">1.6 N
+次扩展信源熵 / Entropy of N-th Extension Source</h2>
+<p>对离散无记忆信源 / For a discrete memoryless source:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>X</mi><mi>N</mi></msup><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>N</mi><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H(X^{N}) = N H(X)
+</annotation></semantics></math></p>
+</div>
+<p>若题目问单符号信源 entropy 与 N extended source entropy
+的关系，答案一般选：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>X</mi><mi>N</mi></msup><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>N</mi><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H(X^{N}) = N H(X)
+</annotation></semantics></math></p>
+</div>
+<p>English sentence:</p>
+<p>For a discrete memoryless source, the entropy of the N-th extension
+source is N times the entropy of the original single-symbol source.</p>
+<hr />
+<h2 id="极限熵-limiting-entropy-or-ultimate-entropy">1.7 极限熵 /
+Limiting Entropy or Ultimate Entropy</h2>
+<p>定义 / Definition:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mi>∞</mi></msub><mo>=</mo><mi>l</mi><mi>i</mi><msub><mi>m</mi><mrow><mi>N</mi><mo>→</mo><mi>i</mi><mi>n</mi><mi>f</mi><mi>i</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>y</mi></mrow></msub><mi>H</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mi>N</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><msub><mi>X</mi><mn>2</mn></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>X</mi><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H_{\infty} = lim_{N\to infinity} H(X_N | X_1, X_2, \cdots, X_{N-1})
+</annotation></semantics></math></p>
+</div>
+<p>对平稳有记忆信源，平均符号熵随阶数增加不增：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mi>∞</mi></msub><mo>≤</mo><mi>⋯</mi><mo>≤</mo><msub><mi>H</mi><mi>N</mi></msub><mi>/</mi><mi>N</mi><mo>≤</mo><mi>⋯</mi><mo>≤</mo><msub><mi>H</mi><mn>2</mn></msub><mi>/</mi><mn>2</mn><mo>≤</mo><msub><mi>H</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">
+H_{\infty} \le \cdots \le H_N/N \le \cdots \le H_2/2 \le H_1
+</annotation></semantics></math></p>
+</div>
+<p>复习题选择题答案：</p>
+<div class="answer-block">
+<p>The ultimate entropy must be smaller than any single entropy.</p>
+</div>
+<p>更严谨表达：</p>
+<p>The limiting entropy is not greater than any finite-order average
+symbol entropy.</p>
+<hr />
+<h2 id="率失真函数端点-endpoints-of-rate-distortion-function">1.8
+率失真函数端点 / Endpoints of Rate-Distortion Function</h2>
+<p>必背：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">min</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">max</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}R(D_{\min}) &amp;= H(X) \\
+R(D_{\max}) &amp;= 0\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>中文：</p>
+<p>允许失真最小时，相当于无失真编码，所需信息率为
+H(X)。允许失真达到最大可容许失真时，不需要传输信息，R(Dmax)=0。</p>
+<p>English:</p>
+<p>At the minimum distortion, the rate-distortion function equals the
+source entropy. At the maximum allowable distortion, the required rate
+becomes zero.</p>
+<hr />
+<h2 id="信道容量范围-range-of-channel-capacity">1.9 信道容量范围 / Range
+of Channel Capacity</h2>
+<p>复习题填空口径：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>C</mi><mo>≤</mo><mrow><mi mathvariant="normal">min</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">{</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">
+0 \le C \le \min\{H(X), H(Y)\}
+</annotation></semantics></math></p>
+</div>
+<p>English:</p>
+<p>For the channel capacity from the source X to the destination Y, the
+range of C is from 0 to min{H(X), H(Y)}.</p>
+<p>更一般地：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><munder><mi mathvariant="normal">max</mi><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo></mrow></munder><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+C = \operatorname{max}_{p(x)} I(X;Y)
+</annotation></semantics></math></p>
+</div>
+<hr />
+<h1 id="dms-噪声信道计算题-dms-and-noisy-channel-calculation">2. DMS +
+噪声信道计算题 / DMS and Noisy Channel Calculation</h1>
+<h2 id="标准步骤-standard-procedure">2.1 标准步骤 / Standard
+Procedure</h2>
+<p>题型：</p>
+<p>Given a DMS X and a noisy channel P(Y|X), calculate self-information,
+H(X), H(Y), H(X,Y), and I(X;Y).</p>
+<p>中文步骤：</p>
+<ol type="1">
+<li>根据 P(X) 求自信息 I(a_i)。</li>
+<li>求 H(X)。</li>
+<li>由全概率公式求 P(Y)。</li>
+<li>求 H(Y)。</li>
+<li>求联合概率 P(X,Y)=P(X)P(Y|X)。</li>
+<li>求 H(X,Y)。</li>
+<li>求 I(X;Y)=H(X)+H(Y)-H(X,Y)。</li>
+</ol>
+<p>English template:</p>
+<div class="note-block">
+<p>First, we calculate the marginal distribution of Y by the law of
+total probability. Then the joint distribution is obtained by
+p(x_i,y_j)=p(x_i)p(y_j|x_i). Finally, the average mutual information is
+I(X;Y)=H(X)+H(Y)-H(X,Y).</p>
+</div>
+<hr />
+<h2 id="复习题原型-review-problem-prototype">2.2 复习题原型 / Review
+Problem Prototype</h2>
+<p>已知 / Given:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>,</mo><mspace width="1.0em"></mspace><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo>∣</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.8</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(a_1) &amp;= 0.5,\quad P(a_2) = 0.5 \\
+P(Y \mid X) &amp;=
+\left[
+\begin{array}{cc}
+0.6 &amp; 0.4 \\
+0.2 &amp; 0.8
+\end{array}
+\right]
+\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="a-self-information">a) Self-information</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.5</mn><mo>=</mo><mn>1</mn><mtext mathvariant="normal">bit</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.5</mn><mo>=</mo><mn>1</mn><mtext mathvariant="normal">bit</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}I(a_{1}) &amp;= -\log 0.5 = 1 \text{bit} \\
+I(a_{2}) &amp;= -\log 0.5 = 1 \text{bit}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The self-information values are I(a1)=1 bit and I(a2)=1 bit.</p>
+<h3 id="b-source-entropy-hx">b) Source entropy H(X)</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>1</mn><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mn>1</mn><mo>=</mo><mn>1</mn><mtext mathvariant="normal">bit/symbol</mtext></mrow><annotation encoding="application/x-tex">
+H(X) = 0.5 \cdot 1 + 0.5 \cdot 1 = 1 \text{bit/symbol}
+</annotation></semantics></math></p>
+</div>
+<h3 id="c-marginal-distribution-and-entropy-of-y">c) Marginal
+distribution and entropy of Y</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>b</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.6</mn><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mn>0.2</mn><mo>=</mo><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.4</mn><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mn>0.8</mn><mo>=</mo><mn>0.6</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}P(b_{1}) &amp;= 0.5 \cdot 0.6 + 0.5 \cdot 0.2 = 0.4 \\
+P(b_{2}) &amp;= 0.5 \cdot 0.4 + 0.5 \cdot 0.8 = 0.6\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn><mo>−</mo><mn>0.6</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.6</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.97095</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≈</mo><mn>0.971</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H(Y) &amp;= -0.4 \log 0.4 - 0.6 \log 0.6 \\
+&amp;= 0.97095 \text{bit/symbol} \\
+&amp;\approx 0.971 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="d-joint-distribution-and-joint-entropy">d) Joint distribution
+and joint entropy</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.6</mn><mo>=</mo><mn>0.3</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.4</mn><mo>=</mo><mn>0.2</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.2</mn><mo>=</mo><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.8</mn><mo>=</mo><mn>0.4</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}P(a_{1},b_{1}) &amp;= 0.5 \cdot 0.6 = 0.3 \\
+P(a_{1},b_{2}) &amp;= 0.5 \cdot 0.4 = 0.2 \\
+P(a_{2},b_{1}) &amp;= 0.5 \cdot 0.2 = 0.1 \\
+P(a_{2},b_{2}) &amp;= 0.5 \cdot 0.8 = 0.4\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.3</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.3</mn><mo>−</mo><mn>0.2</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo>−</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.1</mn><mo>−</mo><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5211</mn><mo>+</mo><mn>0.4644</mn><mo>+</mo><mn>0.3322</mn><mo>+</mo><mn>0.5288</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.8465</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H(X,Y) \\
+&amp;= -0.3 \log 0.3 -0.2 \log 0.2 -0.1 \log 0.1 -0.4 \log 0.4 \\
+&amp;= 0.5211 + 0.4644 + 0.3322 + 0.5288 \\
+&amp;= 1.8465 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="e-average-mutual-information">e) Average mutual information</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>+</mo><mn>0.97095</mn><mo>−</mo><mn>1.8465</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.1245</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≈</mo><mn>0.125</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}I(X;Y) &amp;= H(X) + H(Y) - H(X,Y) \\
+&amp;= 1 + 0.97095 - 1.8465 \\
+&amp;= 0.1245 \text{bit/symbol} \\
+&amp;\approx 0.125 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>考试注意 / Exam note:</p>
+<p>复习题答案中最后一行写成了
+<code>I(X,Y)=H(X)+H(Y)-I(X,Y)</code>，这是笔误。正确公式是：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+I(X;Y)=H(X)+H(Y)-H(X,Y)
+</annotation></semantics></math></p>
+</div>
+<p>English correction:</p>
+<p>The correct formula is I(X;Y)=H(X)+H(Y)-H(X,Y).</p>
+<hr />
+<h1 id="二阶-markov-信源-binary-2-step-markov-source">3. 二阶 Markov
+信源 / Binary 2-Step Markov Source</h1>
+<h2 id="状态定义-state-definition">3.1 状态定义 / State Definition</h2>
+<p>题型：</p>
+<p>A binary 2-step Markov source has symbol set {0,1}. The transition
+probability of the next symbol depends on the previous two symbols.</p>
+<p>中文：</p>
+<p>二阶 Markov 信源的状态不是单个符号，而是长度为 2 的符号组：</p>
+<div class="literal-block">
+<pre class="text"><code>S1=00, S2=01, S3=10, S4=11</code></pre>
+</div>
+<p>English:</p>
+<p>For a second-order binary Markov source, each state is a two-symbol
+state: 00, 01, 10, and 11.</p>
+<hr />
+<h2 id="复习题原型-review-problem-prototype-1">3.2 复习题原型 / Review
+Problem Prototype</h2>
+<p>已知 / Given:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.6</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}P(0\mid 00) &amp;= P(1\mid 11)=0.6 \\
+P(1\mid 00) &amp;= P(0\mid 11)=0.4 \\
+P(0\mid 01) &amp;= P(0\mid 10)=P(1\mid 01)=P(1\mid 10)=0.5\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="a-状态转移图-state-transition-graph">a) 状态转移图 / State
+Transition Graph</h3>
+<p>写法：</p>
+<div class="literal-block">
+<pre class="text"><code>00 -&gt; 00 with probability 0.6
+00 -&gt; 01 with probability 0.4
+
+01 -&gt; 10 with probability 0.5
+01 -&gt; 11 with probability 0.5
+
+10 -&gt; 00 with probability 0.5
+10 -&gt; 01 with probability 0.5
+
+11 -&gt; 10 with probability 0.4
+11 -&gt; 11 with probability 0.6</code></pre>
+</div>
+<p>English sentence:</p>
+<p>The next state is obtained by shifting left and appending the newly
+generated symbol.</p>
+<h3 id="b-状态转移矩阵-state-transition-matrix">b) 状态转移矩阵 / State
+Transition Matrix</h3>
+<p>按状态顺序 <code>(00, 01, 10, 11)</code>:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+P =
+\begin{bmatrix}
+0.6 &amp; 0.4 &amp; 0   &amp; 0 \\
+0   &amp; 0   &amp; 0.5 &amp; 0.5 \\
+0.5 &amp; 0.5 &amp; 0   &amp; 0 \\
+0   &amp; 0   &amp; 0.4 &amp; 0.6
+\end{bmatrix}
+</annotation></semantics></math></p>
+</div>
+<h3 id="c-平稳分布-stationary-distribution">c) 平稳分布 / Stationary
+Distribution</h3>
+<p>设 / Let:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>w</mi><mn>1</mn></msub><mo>,</mo><msub><mi>w</mi><mn>2</mn></msub><mo>,</mo><msub><mi>w</mi><mn>3</mn></msub><mo>,</mo><msub><mi>w</mi><mn>4</mn></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+w = (w_{1}, w_{2}, w_{3}, w_{4})
+</annotation></semantics></math></p>
+</div>
+<p>满足 / It satisfies:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>w</mi><mi>P</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>w</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>w</mi><mn>1</mn></msub><mo>+</mo><msub><mi>w</mi><mn>2</mn></msub><mo>+</mo><msub><mi>w</mi><mn>3</mn></msub><mo>+</mo><msub><mi>w</mi><mn>4</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}wP &amp;= w \\
+w_{1} + w_{2} + w_{3} + w_{4} &amp;= 1\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>结果 / Result:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mi>/</mi><mn>18</mn><mo>,</mo><mn>2</mn><mi>/</mi><mn>9</mn><mo>,</mo><mn>2</mn><mi>/</mi><mn>9</mn><mo>,</mo><mn>5</mn><mi>/</mi><mn>18</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+w = (5/18, 2/9, 2/9, 5/18)
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The stationary state distribution is
+<code>(5/18, 2/9, 2/9, 5/18)</code> for states
+<code>(00,01,10,11)</code>.</p>
+<h3 id="d-极限符号分布-limiting-symbol-distribution">d) 极限符号分布 /
+Limiting Symbol Distribution</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>1</mn></msub><mo>+</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>2</mn></msub><mo>+</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>3</mn></msub><mo>+</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>4</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.6</mn><mo>⋅</mo><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mi>/</mi><mn>18</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>/</mi><mn>9</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>/</mi><mn>9</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>0.4</mn><mo>⋅</mo><mo stretchy="false" form="prefix">(</mo><mn>5</mn><mi>/</mi><mn>18</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mi>/</mi><mn>2</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>−</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mi>/</mi><mn>2</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}P(0) &amp;= P(0\mid 00)w_{1} + P(0\mid 01)w_{2} + P(0\mid 10)w_{3} + P(0\mid 11)w_{4} \\
+&amp;= 0.6 \cdot (5/18) + 0.5 \cdot (2/9) + 0.5 \cdot (2/9) + 0.4 \cdot (5/18) \\
+&amp;= 1/2 \\
+P(1) &amp;= 1 - P(0) = 1/2\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The limiting distribution of symbols 0 and 1 is
+<code>(1/2, 1/2)</code>.</p>
+<hr />
+<h2
+id="markov-链平稳分布通用模板-general-template-for-stationary-distribution">3.3
+Markov 链平稳分布通用模板 / General Template for Stationary
+Distribution</h2>
+<p>English template:</p>
+<div class="note-block">
+<p>Let pi be the stationary distribution. It must satisfy pi = pi P and
+sum_i pi_i = 1. Solving these equations gives the stationary
+distribution.</p>
+</div>
+<p>中文模板：</p>
+<p>设平稳分布为 pi，列方程 <code>pi = pi P</code> 和归一化条件
+<code>sum pi_i=1</code>，解方程即可。</p>
+<hr />
+<h2 id="markov-极限熵-limiting-entropy-of-a-markov-chain">3.4 Markov
+极限熵 / Limiting Entropy of a Markov Chain</h2>
+<p>对一阶 Markov 链：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mi>∞</mi></msub><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><mi>p</mi><msub><mi>i</mi><mi>i</mi></msub><mi>H</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>P</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H_{\infty} = \sum_{i} pi_i H(P_i)
+</annotation></semantics></math></p>
+</div>
+<p>其中 <code>pi_i</code> 是平稳状态概率，<code>P_i</code> 是第 i
+行条件分布。</p>
+<p>English:</p>
+<p>The limiting entropy of a Markov chain is the weighted average of the
+entropy of each row of the transition matrix, with stationary
+probabilities as weights.</p>
+<hr />
+<h1 id="jensen-shannon-divergence-与-markov-综合题">4. Jensen-Shannon
+Divergence 与 Markov 综合题</h1>
+<h2 id="js-散度公式-jensen-shannon-divergence">4.1 JS 散度公式 /
+Jensen-Shannon Divergence</h2>
+<p>给两个分布 p 和 q:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>m</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo>+</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>J</mi><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo>,</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mi>/</mi><mn>2</mn><mi>K</mi><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mn>1</mn><mi>/</mi><mn>2</mn><mi>K</mi><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>q</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}m &amp;= (p + q) / 2 \\
+JS(p,q) &amp;= 1/2 KL(p||m) + 1/2 KL(q||m)\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>KL 散度：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mi>L</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>p</mi><mi>i</mi></msub><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>p</mi><mi>i</mi></msub><mi>/</mi><msub><mi>q</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+KL(p||q) = \sum_{i} p_i \log (p_i / q_i)
+</annotation></semantics></math></p>
+</div>
+<p>等价熵公式：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo>,</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo>+</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mo stretchy="false" form="prefix">[</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">]</mo><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">
+JS(p,q) = H((p+q)/2) - [H(p)+H(q)]/2
+</annotation></semantics></math></p>
+</div>
+<p>English:</p>
+<p>The Jensen-Shannon divergence is a symmetric and bounded version of
+KL divergence.</p>
+<hr />
+<h2 id="复习题原型-review-problem-prototype-2">4.2 复习题原型 / Review
+Problem Prototype</h2>
+<p>已知两个条件分布 / Given:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>p</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>0.7</mn><mo>,</mo><mn>0.3</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>q</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}p &amp;= (0.7, 0.3) \\
+q &amp;= (0.4, 0.6)\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="a-js-divergence">a) JS divergence</h3>
+<p>复习题答案：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mi>S</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo>,</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.0462</mn><mtext mathvariant="normal">bit/symbol</mtext></mrow><annotation encoding="application/x-tex">
+JS(p,q) = 0.0462 \text{bit/symbol}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The Jensen-Shannon divergence of the two conditional distributions is
+0.0462 bit/symbol.</p>
+<h3 id="b-stationary-distribution">b) Stationary distribution</h3>
+<p>若转移矩阵为 / If:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.7</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+P =
+\begin{bmatrix}
+0.7 &amp; 0.3 \\
+0.4 &amp; 0.6
+\end{bmatrix}
+</annotation></semantics></math></p>
+</div>
+<p>设 / Let:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>π</mi><mi>F</mi></msub><mo>,</mo><msub><mi>π</mi><mi>D</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\pi = (\pi_F, \pi_D)
+</annotation></semantics></math></p>
+</div>
+<p>解：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>π</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>π</mi><mi>P</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>π</mi><mi>F</mi></msub><mo>+</mo><msub><mi>π</mi><mi>D</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}\pi &amp;= \pi P \\
+\pi_F + \pi_D &amp;= 1\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>结果：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>4</mn><mi>/</mi><mn>7</mn><mo>,</mo><mn>3</mn><mi>/</mi><mn>7</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+\pi = (4/7, 3/7)
+</annotation></semantics></math></p>
+</div>
+<h3 id="c-limiting-entropy">c) Limiting entropy</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>H</mi><mi>∞</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>4</mn><mi>/</mi><mn>7</mn><mo stretchy="false" form="postfix">)</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mn>0.7</mn><mo>,</mo><mn>0.3</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mi>/</mi><mn>7</mn><mo stretchy="false" form="postfix">)</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.9199</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H_{\infty} &amp;= (4/7)H(0.7,0.3) + (3/7)H(0.4,0.6) \\
+&amp;= 0.9199 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The limiting entropy of the Markov chain is 0.9199 bit/symbol.</p>
+<hr />
+<h1 id="离散信道与信道容量-discrete-channel-and-channel-capacity">5.
+离散信道与信道容量 / Discrete Channel and Channel Capacity</h1>
+<h2 id="基本公式-basic-formula">5.1 基本公式 / Basic Formula</h2>
+<p>信道容量定义：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><munder><mi mathvariant="normal">max</mi><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo></mrow></munder><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+C = \operatorname{max}_{p(x)} I(X;Y)
+</annotation></semantics></math></p>
+</div>
+<p>English:</p>
+<p>Channel capacity is the maximum average mutual information over all
+possible input distributions.</p>
+<hr />
+<h2 id="对称信道-symmetric-channel">5.2 对称信道 / Symmetric
+Channel</h2>
+<p>如果一个离散无记忆信道是对称信道，并且每行概率分布相同排列，输出符号数为
+m，则：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mi>m</mi><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>o</mi><mi>w</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+C = \log m - H(row)
+</annotation></semantics></math></p>
+</div>
+<p>复习题 A 型：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>r</mi><mi>o</mi><mi>w</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>4</mn><mi>/</mi><mn>5</mn><mo>,</mo><mn>1</mn><mi>/</mi><mn>10</mn><mo>,</mo><mn>1</mn><mi>/</mi><mn>10</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>m</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>3</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}row &amp;= (4/5, 1/10, 1/10) \\
+m &amp;= 3\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>C</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>3</mn><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mn>4</mn><mi>/</mi><mn>5</mn><mo>,</mo><mn>1</mn><mi>/</mi><mn>10</mn><mo>,</mo><mn>1</mn><mi>/</mi><mn>10</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.5850</mn><mo>−</mo><mn>0.9219</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.6631</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}C &amp;= \log 3 - H(4/5, 1/10, 1/10) \\
+&amp;= 1.5850 - 0.9219 \\
+&amp;= 0.6631 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>Channel A is a symmetric channel, and its capacity is 0.6631
+bit/symbol.</p>
+<hr />
+<h2 id="准对称信道-quasi-symmetric-channel">5.3 准对称信道 /
+Quasi-Symmetric Channel</h2>
+<p>中文：</p>
+<p>准对称信道可以分解为若干个对称子信道。其容量取决于每行熵、子信道列和以及输入符号数。</p>
+<p>English:</p>
+<p>A quasi-symmetric channel can be decomposed into several symmetric
+subchannels. Its capacity is computed from the row entropy and the
+column sums of the subchannels.</p>
+<p>复习题 B 型答案：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mn>0.126</mn><mtext mathvariant="normal">bit/symbol</mtext></mrow><annotation encoding="application/x-tex">
+C = 0.126 \text{bit/symbol}
+</annotation></semantics></math></p>
+</div>
+<p>答题句：</p>
+<div class="note-block">
+<p>Channel B is a quasi-symmetric channel. By decomposing it into
+symmetric subchannels and applying the quasi-symmetric channel capacity
+formula, the capacity is 0.126 bit/symbol.</p>
+</div>
+<hr />
+<h2 id="医疗-ai-准对称信道题-medical-ai-quasi-symmetric-channel">5.4
+医疗 AI 准对称信道题 / Medical AI Quasi-Symmetric Channel</h2>
+<p>题型：</p>
+<p>Medical AI system classifies chest X-ray images into Healthy,
+Pneumonia, and Uncertain. The channel is quasi-symmetric.</p>
+<p>复习题给出的容量计算：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>C</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>2</mn><mo>−</mo><mo stretchy="false" form="prefix">(</mo><mn>0.9</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.9</mn><mo>+</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mn>0.7</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>+</mo><mn>0.369</mn><mo>−</mo><mn>1.1568</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.2122</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}C &amp;= \log 2 - (0.9 \log 0.9 + 0.1 \log 0.2) - H(0.7,0.2,0.1) \\
+&amp;= 1 + 0.369 - 1.1568 \\
+&amp;= 0.2122 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>标准答案：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mn>0.2122</mn><mtext mathvariant="normal">bit/symbol</mtext></mrow><annotation encoding="application/x-tex">
+C = 0.2122 \text{bit/symbol}
+</annotation></semantics></math></p>
+</div>
+<p>英文答题：</p>
+<div class="note-block">
+<p>The channel is quasi-symmetric. Substituting the row entropy and the
+subchannel terms into the capacity formula gives C = 0.2122
+bit/symbol.</p>
+</div>
+<h3 id="与-0.7-对调时-if-0.2-and-0.7-are-swapped">0.2 与 0.7 对调时 / If
+0.2 and 0.7 are swapped</h3>
+<p>中文：</p>
+<p>容量保持不变。原因是准对称信道的子对称信道行和、列和结构不变，只是概率位置发生交换。</p>
+<p>English answer:</p>
+<p>The channel capacity remains unchanged, because swapping 0.2 and 0.7
+only changes the positions of probabilities. The row sums and column
+sums of the quasi-symmetric subchannels remain unchanged.</p>
+<hr />
+<h1 id="率失真函数-rate-distortion-function">6. 率失真函数 /
+Rate-Distortion Function</h1>
+<h2 id="必背公式-must-memorize-formula">6.1 必背公式 / Must-Memorize
+Formula</h2>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">min</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">max</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}R(D_{\min}) &amp;= H(X) \\
+R(D_{\max}) &amp;= 0\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>中文解释：</p>
+<p>失真最小意味着无失真恢复，需要完整保留信源熵。失真最大时，可以完全不传信息，信息率为
+0。</p>
+<p>English explanation:</p>
+<p>At minimum distortion, lossless reconstruction is required, so the
+rate equals the source entropy. At maximum allowable distortion, no
+information needs to be transmitted, so the rate is zero.</p>
+<p>选择填空常见答案：</p>
+<div class="literal-block">
+<pre class="text"><code>R(Dmin)=H(X), R(Dmax)=0</code></pre>
+</div>
+<hr />
+<h1 id="shannon-fano-fenno-coding-与-huffman-coding">7. Shannon-Fano /
+Fenno Coding 与 Huffman Coding</h1>
+<p>复习题里写的是 <code>Fenno coding</code>，通常指 Shannon-Fano
+coding。</p>
+<h2 id="平均码长-average-code-length">7.1 平均码长 / Average Code
+Length</h2>
+<p>公式：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>K</mi><mo accent="true">‾</mo></mover><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>p</mi><mi>i</mi></msub><msub><mi>l</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">
+\bar{K} = \sum_{i} p_i l_i
+</annotation></semantics></math></p>
+</div>
+<p>English:</p>
+<p>The average code length is the weighted sum of codeword lengths.</p>
+<hr />
+<h2 id="编码效率-coding-efficiency">7.2 编码效率 / Coding
+Efficiency</h2>
+<p>公式：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mover><mi>K</mi><mo accent="true">‾</mo></mover></mrow><annotation encoding="application/x-tex">
+\eta = H(X) / \bar{K}
+</annotation></semantics></math></p>
+</div>
+<p>百分比：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mover><mi>K</mi><mo accent="true">‾</mo></mover><mo>*</mo><mn>100</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">
+\eta = H(X) / \bar{K} * 100\%
+</annotation></semantics></math></p>
+</div>
+<p>English:</p>
+<p>The coding efficiency is the ratio of source entropy to average code
+length.</p>
+<hr />
+<h2 id="shannon-fano-编码步骤-shannon-fano-coding-procedure">7.3
+Shannon-Fano 编码步骤 / Shannon-Fano Coding Procedure</h2>
+<p>中文步骤：</p>
+<ol type="1">
+<li>按概率从大到小排序。</li>
+<li>将符号集合分成概率总和尽量接近的两组。</li>
+<li>一组赋 0，另一组赋 1。</li>
+<li>对每个子组继续二分，直到每个符号都有唯一码字。</li>
+</ol>
+<p>English template:</p>
+<div class="note-block">
+<p>Sort the symbols in descending order of probability. Split the set
+into two groups with probabilities as close as possible. Assign 0 to one
+group and 1 to the other group, and repeat recursively.</p>
+</div>
+<hr />
+<h2 id="huffman-编码步骤-huffman-coding-procedure">7.4 Huffman 编码步骤
+/ Huffman Coding Procedure</h2>
+<p>中文步骤：</p>
+<ol type="1">
+<li>选概率最小的两个符号合并。</li>
+<li>新节点概率为两者之和。</li>
+<li>重复合并直到只剩一个根节点。</li>
+<li>从根到叶分配 0/1，得到码字。</li>
+</ol>
+<p>English template:</p>
+<div class="note-block">
+<p>At each step, combine the two symbols with the smallest
+probabilities. Repeat this operation until one root node remains. Assign
+binary labels to the branches to obtain the Huffman code.</p>
+</div>
+<hr />
+<h2 id="复习题原型-1五符号-dms-review-prototype-1-five-symbol-dms">7.5
+复习题原型 1：五符号 DMS / Review Prototype 1: Five-Symbol DMS</h2>
+<p>概率分布：</p>
+<div class="literal-block">
+<pre class="text"><code>a1: 0.4
+a2: 0.2
+a3: 0.2
+a4: 0.1
+a5: 0.1</code></pre>
+</div>
+<h3 id="shannon-fano-fenno-code">Shannon-Fano / Fenno code</h3>
+<p>复习题码字：</p>
+<div class="literal-block">
+<pre class="text"><code>a1 -&gt; 0
+a2 -&gt; 100
+a3 -&gt; 101
+a4 -&gt; 110
+a5 -&gt; 111</code></pre>
+</div>
+<p>平均码长：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>K</mi><mo accent="true">‾</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>⋅</mo><mn>0.4</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.1</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>2.2</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}\bar{K} &amp;= 1 \cdot 0.4 + 3 \cdot 0.2 + 3 \cdot 0.2 + 3 \cdot 0.1 + 3 \cdot 0.1 \\
+&amp;= 2.2 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="huffman-code">Huffman code</h3>
+<p>复习题码字：</p>
+<div class="literal-block">
+<pre class="text"><code>a1 -&gt; 1
+a2 -&gt; 01
+a3 -&gt; 001
+a4 -&gt; 0000
+a5 -&gt; 0001</code></pre>
+</div>
+<p>平均码长：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mover><mi>K</mi><mo accent="true">‾</mo></mover></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>⋅</mo><mn>0.4</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>4</mn><mo>⋅</mo><mn>0.1</mn><mo>+</mo><mn>4</mn><mo>⋅</mo><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>2.2</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}\bar{K} &amp;= 1 \cdot 0.4 + 2 \cdot 0.2 + 3 \cdot 0.2 + 4 \cdot 0.1 + 4 \cdot 0.1 \\
+&amp;= 2.2 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>熵：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn><mo>−</mo><mn>2</mn><mo>⋅</mo><mn>0.2</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo>−</mo><mn>2</mn><mo>⋅</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>2.122</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H(X) &amp;= -0.4 \log 0.4 -2 \cdot 0.2 \log 0.2 -2 \cdot 0.1 \log 0.1 \\
+&amp;= 2.122 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>编码效率：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>=</mo><mn>2.122</mn><mi>/</mi><mn>2.2</mn><mo>=</mo><mn>0.9645</mn><mo>=</mo><mn>96.45</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">
+\eta = 2.122/2.2 = 0.9645 = 96.45\%
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>Both coding methods have the same average code length, 2.2
+bit/symbol, and the coding efficiency is about 96.45%.</p>
+<hr />
+<h2
+id="复习题原型-2传感器四符号-huffman-review-prototype-2-four-symbol-sensor-huffman">7.6
+复习题原型 2：传感器四符号 Huffman / Review Prototype 2: Four-Symbol
+Sensor Huffman</h2>
+<p>概率分布：</p>
+<div class="literal-block">
+<pre class="text"><code>A: 0.4
+B: 0.3
+C: 0.2
+D: 0.1</code></pre>
+</div>
+<p>复习题 Huffman code:</p>
+<div class="literal-block">
+<pre class="text"><code>A -&gt; 1
+B -&gt; 01
+C -&gt; 000
+D -&gt; 001</code></pre>
+</div>
+<p>平均码长：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>L</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.4</mn><mo>⋅</mo><mn>1</mn><mo>+</mo><mn>0.3</mn><mo>⋅</mo><mn>2</mn><mo>+</mo><mn>0.2</mn><mo>⋅</mo><mn>3</mn><mo>+</mo><mn>0.1</mn><mo>⋅</mo><mn>3</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.9</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}L &amp;= 0.4 \cdot 1 + 0.3 \cdot 2 + 0.2 \cdot 3 + 0.1 \cdot 3 \\
+&amp;= 1.9 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>熵：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn><mo>−</mo><mn>0.3</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.3</mn><mo>−</mo><mn>0.2</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo>−</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.8464</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}H(X) &amp;= -0.4 \log 0.4 -0.3 \log 0.3 -0.2 \log 0.2 -0.1 \log 0.1 \\
+&amp;= 1.8464 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>编码效率：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>η</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mi>L</mi><mo>*</mo><mn>100</mn><mi>%</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.8464</mn><mi>/</mi><mn>1.9</mn><mo>*</mo><mn>100</mn><mi>%</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>97.18</mn><mi>%</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}\eta &amp;= H(X)/L * 100\% \\
+&amp;= 1.8464/1.9 * 100\% \\
+&amp;= 97.18\%\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The average code length is 1.9 bit/symbol and the coding efficiency
+is 97.18%.</p>
+<hr />
+<h1 id="线性分组码-linear-block-coding">8. 线性分组码 / Linear Block
+Coding</h1>
+<h2 id="基本概念-basic-concepts">8.1 基本概念 / Basic Concepts</h2>
+<p>线性分组码 <code>(n,k)</code>:</p>
+<div class="literal-block">
+<pre class="text"><code>k = number of message bits
+n = number of codeword bits</code></pre>
+</div>
+<p>编码：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mi>u</mi><mi>G</mi></mrow><annotation encoding="application/x-tex">
+x = uG
+</annotation></semantics></math></p>
+</div>
+<p>其中 <code>u</code> 是消息，<code>G</code> 是生成矩阵。</p>
+<p>English:</p>
+<p>For an (n,k) linear block code, the codeword is obtained by
+multiplying the message vector by the generator matrix over GF(2).</p>
+<hr />
+<h2 id="gf2-运算-operations-over-gf2">8.2 GF(2) 运算 / Operations over
+GF(2)</h2>
+<div class="literal-block">
+<pre class="text"><code>0+0=0
+0+1=1
+1+0=1
+1+1=0</code></pre>
+</div>
+<p>中文：</p>
+<p>线性分组码里的加法不是普通整数加法，而是模 2 加法。</p>
+<p>English:</p>
+<p>All additions in linear block coding are modulo-2 additions.</p>
+<hr />
+<h2 id="监督矩阵-parity-check-matrix">8.3 监督矩阵 / Parity-Check
+Matrix</h2>
+<p>若生成矩阵是系统形式：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><msub><mi>I</mi><mi>k</mi></msub><mo>∣</mo><mi>P</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+G = \left[ I_k \mid P \right]
+</annotation></semantics></math></p>
+</div>
+<p>则监督矩阵：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><msup><mi>P</mi><mi>T</mi></msup><mo>∣</mo><msub><mi>I</mi><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow></msub><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+H = \left[ P^{T} \mid I_{n-k} \right]
+</annotation></semantics></math></p>
+</div>
+<p>满足：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><msup><mi>H</mi><mi>T</mi></msup><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">
+G H^{T} = 0
+</annotation></semantics></math></p>
+</div>
+<p>English:</p>
+<p>If the generator matrix is in systematic form G=[I_k|P], then the
+parity-check matrix is H=[P^T|I_{n-k}].</p>
+<hr />
+<h2
+id="hamming-距离与检错纠错-hamming-distance-error-detection-and-correction">8.4
+Hamming 距离与检错纠错 / Hamming Distance, Error Detection and
+Correction</h2>
+<p>最小 Hamming 距离：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mi>i</mi><mi>m</mi><mi>u</mi><mi>m</mi><mi>H</mi><mi>a</mi><mi>m</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi><mi>b</mi><mi>e</mi><mi>t</mi><mi>w</mi><mi>e</mi><mi>e</mi><mi>n</mi><mi>a</mi><mi>n</mi><mi>y</mi><mi>t</mi><mi>w</mi><mi>o</mi><mi>d</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>n</mi><mi>c</mi><mi>t</mi><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>w</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">
+d_{\min} = minimum Hamming distance between any two distinct codewords
+</annotation></semantics></math></p>
+</div>
+<p>检错能力：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>e</mi><mi>t</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>u</mi><mi>p</mi><mi>t</mi><mi>o</mi><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>−</mo><mn>1</mn><mi>e</mi><mi>r</mi><mi>r</mi><mi>o</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">
+detect up to d_{\min} - 1 errors
+</annotation></semantics></math></p>
+</div>
+<p>纠错能力：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>u</mi><mi>p</mi><mi>t</mi><mi>o</mi><mo stretchy="false" form="prefix">⌊</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn><mo stretchy="false" form="postfix">⌋</mo><mi>e</mi><mi>r</mi><mi>r</mi><mi>o</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">
+correct up to \lfloor (d_{\min} - 1)/2 \rfloor errors
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>A code with minimum Hamming distance d_min can detect up to d_min-1
+errors and correct up to floor((d_min-1)/2) errors.</p>
+<hr />
+<h2 id="syndrome-译码-syndrome-decoding">8.5 Syndrome 译码 / Syndrome
+Decoding</h2>
+<p>收到码字 <code>w</code>:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mi>w</mi><msup><mi>H</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">
+S = w H^{T}
+</annotation></semantics></math></p>
+</div>
+<p>若 <code>S=0</code>，无错或错误未检出。</p>
+<p>若 <code>S</code> 等于 <code>H</code>
+的某一列，则该列对应位置发生单比特错误。</p>
+<p>纠正：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>d</mi><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>w</mi><mi>o</mi><mi>r</mi><mi>d</mi><mo>=</mo><mi>w</mi><mo>+</mo><mi>e</mi></mrow><annotation encoding="application/x-tex">
+corrected codeword = w + e
+</annotation></semantics></math></p>
+</div>
+<p>English template:</p>
+<div class="note-block">
+<p>The syndrome is S=wH^T. Since the syndrome equals the corresponding
+column of H, the error pattern is identified. Therefore, the transmitted
+codeword is w+e.</p>
+</div>
+<hr />
+<h2 id="复习题原型-163-线性分组码-review-prototype-1-63-lbc">8.6
+复习题原型 1：(6,3) 线性分组码 / Review Prototype 1: (6,3) LBC</h2>
+<p>复习题中由码字可还原的生成矩阵：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+G =
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1
+\end{bmatrix}
+</annotation></semantics></math></p>
+</div>
+<h3 id="a-encode-m100">a) Encode M=(100)</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo><mi>G</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>100110</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+x = (100)G = (100110)
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The codeword for message M=(100) is <code>(100110)</code>.</p>
+<h3 id="b-parity-check-matrix-h">b) Parity-check matrix H</h3>
+<p>这里：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+P =
+\begin{bmatrix}
+1 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; 1 \\
+1 &amp; 0 &amp; 1
+\end{bmatrix}
+</annotation></semantics></math></p>
+</div>
+<p>所以：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><msup><mi>P</mi><mi>T</mi></msup><mo>∣</mo><msub><mi>I</mi><mn>3</mn></msub><mo stretchy="true" form="postfix">]</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+H &amp;= \left[ P^{T} \mid I_3 \right] \\
+  &amp;=
+\begin{bmatrix}
+1 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="c-received-code-w101111-error-weight-2">c) Received code
+w=(101111), error weight &lt; 2</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mi>w</mi><msup><mi>H</mi><mi>T</mi></msup><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mn>0</mn><mn>0</mn><msup><mo stretchy="false" form="postfix">)</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">
+S = wH^{T} = (1 0 0)^T
+</annotation></semantics></math></p>
+</div>
+<p><code>S</code> 等于 H 的第 4 列，所以错误图样：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>000100</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+e = (000100)
+</annotation></semantics></math></p>
+</div>
+<p>纠正码字：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>a</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>w</mi><mo>+</mo><mi>e</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>101111</mn><mo>+</mo><mn>000100</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>101011</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}a &amp;= w + e \\
+&amp;= 101111 + 000100 \\
+&amp;= 101011\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The syndrome is <code>(1,0,0)^T</code>, which corresponds to an error
+in the fourth bit. Therefore, the transmitted LBC code is
+<code>(101011)</code>.</p>
+<h3 id="d-全部码字-all-codewords">d) 全部码字 / All codewords</h3>
+<div class="literal-block">
+<pre class="text"><code>000 -&gt; 000000
+001 -&gt; 001101
+010 -&gt; 010011
+100 -&gt; 100110
+011 -&gt; 011110
+110 -&gt; 110101
+101 -&gt; 101011
+111 -&gt; 111000</code></pre>
+</div>
+<p>最小距离：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">
+d_{\min} = 3
+</annotation></semantics></math></p>
+</div>
+<p>纠错能力：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>u</mi><mi>p</mi><mi>t</mi><mi>o</mi><mo stretchy="false" form="prefix">⌊</mo><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mn>2</mn><mo stretchy="false" form="postfix">⌋</mo><mo>=</mo><mn>1</mn><mi>e</mi><mi>r</mi><mi>r</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">
+correct up to \lfloor (3-1)/2 \rfloor=1 error
+</annotation></semantics></math></p>
+</div>
+<p>检错能力：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>e</mi><mi>t</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>u</mi><mi>p</mi><mi>t</mi><mi>o</mi><mn>3</mn><mo>−</mo><mn>1</mn><mo>=</mo><mn>2</mn><mi>e</mi><mi>r</mi><mi>r</mi><mi>o</mi><mi>r</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">
+detect up to 3-1=2 errors
+</annotation></semantics></math></p>
+</div>
+<hr />
+<h2
+id="复习题原型-2另一道-63-线性分组码-review-prototype-2-another-63-lbc">8.7
+复习题原型 2：另一道 (6,3) 线性分组码 / Review Prototype 2: Another
+(6,3) LBC</h2>
+<p>题目要求：</p>
+<div class="literal-block">
+<pre class="text"><code>a) Encode u=[101]
+b) Determine d_min
+c) Explain error detection ability</code></pre>
+</div>
+<p>复习题答案核心：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mi>G</mi><mo>=</mo><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mn>0</mn><mn>1</mn><mn>1</mn><mn>0</mn><mn>1</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">
+uG = [1 0 1 1 0 1]
+</annotation></semantics></math></p>
+</div>
+<p>即：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>w</mi><mi>o</mi><mi>r</mi><mi>d</mi><mo>=</mo><mn>101101</mn></mrow><annotation encoding="application/x-tex">
+codeword = 101101
+</annotation></semantics></math></p>
+</div>
+<p>距离计算中出现：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>d</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>G</mi><mn>1</mn></msub><mo>,</mo><msub><mi>G</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>d</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>G</mi><mn>1</mn></msub><mo>,</mo><msub><mi>G</mi><mn>3</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>d</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>G</mi><mn>2</mn></msub><mo>,</mo><msub><mi>G</mi><mn>3</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>G</mi><mn>1</mn></msub><mo>+</mo><msub><mi>G</mi><mn>2</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>110110</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>G</mi><mn>1</mn></msub><mo>+</mo><msub><mi>G</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>101101</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>G</mi><mn>2</mn></msub><mo>+</mo><msub><mi>G</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>011011</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}d(G_{1},G_{2}) &amp;= 4 \\
+d(G_{1},G_{3}) &amp;= 4 \\
+d(G_{2},G_{3}) &amp;= 4 \\
+G_{1}+G_{2} &amp;= 110110 \\
+G_{1}+G_{3} &amp;= 101101 \\
+G_{2}+G_{3} &amp;= 011011\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>复习题给出：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">
+d_{\min} = 2
+</annotation></semantics></math></p>
+</div>
+<p>按正确公式：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>e</mi><mi>t</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>u</mi><mi>p</mi><mi>t</mi><mi>o</mi><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>−</mo><mn>1</mn><mo>=</mo><mn>1</mn><mi>e</mi><mi>r</mi><mi>r</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">
+detect up to d_{\min} - 1 = 1 error
+</annotation></semantics></math></p>
+</div>
+<p>注意：</p>
+<p>复习题截图里有一处把 <code>d_min=2</code> 后的检错数写成
+<code>2 errors</code> 的笔误；题目正文旁边也出现
+<code>=1 error</code>，考试时建议按公式写：</p>
+<div class="note-block">
+<p>A code with minimum distance d_min can detect up to d_min-1 errors.
+Here d_min=2, so it can detect up to 1 error.</p>
+</div>
+<hr />
+<h1
+id="天气-健康综合题-weather-health-entropy-and-mutual-information">9.
+天气-健康综合题 / Weather-Health Entropy and Mutual Information</h1>
+<h2 id="题型-problem-type">9.1 题型 / Problem Type</h2>
+<p>题目：</p>
+<p>12 examples of school students describing clothing, weather
+condition, and health states. Let X be weather condition
+<code>{cold, comfy, cool}</code> and Y be health state
+<code>{healthy, sick}</code>.</p>
+<p>要求：</p>
+<div class="note-block">
+<ol type="a">
+<li>probability distributions of X and Y</li>
+<li>H(X) and H(Y)</li>
+<li>joint probability distribution and H(X,Y)</li>
+<li>I(X;Y)</li>
+</ol>
+</div>
+<hr />
+<h2 id="复习题标准答案-standard-answer">9.2 复习题标准答案 / Standard
+Answer</h2>
+<p>边缘分布 / Marginal distributions:</p>
+<div class="literal-block">
+<pre class="text"><code>P_X(cold)  = 1/4
+P_X(comfy) = 1/3
+P_X(cool)  = 5/12
+
+P_Y(healthy) = 2/3
+P_Y(sick)    = 1/3</code></pre>
+</div>
+<p>熵 / Entropies:</p>
+<div class="literal-block">
+<pre class="text"><code>H(X) = 1.5546 bit/symbol
+H(Y) = 0.9183 bit/symbol</code></pre>
+</div>
+<p>联合分布 / Joint distribution:</p>
+<div class="literal-block">
+<pre class="text"><code>cold    comfy   cool
+healthy      1/6     1/4     1/4
+sick         1/12    1/12    1/6</code></pre>
+</div>
+<p>联合熵 / Joint entropy:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>2.4591</mn><mtext mathvariant="normal">bit/symbol</mtext></mrow><annotation encoding="application/x-tex">
+H(X,Y) = 2.4591 \text{bit/symbol}
+</annotation></semantics></math></p>
+</div>
+<p>互信息 / Mutual information:</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.5546</mn><mo>+</mo><mn>0.9183</mn><mo>−</mo><mn>2.4591</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.0138</mn><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}I(X;Y) &amp;= H(X) + H(Y) - H(X,Y) \\
+&amp;= 1.5546 + 0.9183 - 2.4591 \\
+&amp;= 0.0138 \text{bit/symbol}\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<p>English answer:</p>
+<p>The average mutual information between weather condition and health
+state is 0.0138 bit/symbol, which indicates that the dependence between
+X and Y is very weak in this sample.</p>
+<hr />
+<h1
+id="选择题与填空题标准答案-standard-answers-for-objective-questions">10.
+选择题与填空题标准答案 / Standard Answers for Objective Questions</h1>
+<h2 id="single-choice-questions">10.1 Single-Choice Questions</h2>
+<h3 id="q1">Q1</h3>
+<p>题意：</p>
+<p>For the entropy of a single-symbol discrete source, the entropy of
+the N extended source must satisfy …</p>
+<p>答案：</p>
+<div class="answer-block">
+<p>B</p>
+</div>
+<p>应背关系：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>X</mi><mi>N</mi></msup><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>N</mi><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H(X^{N}) = N H(X)
+</annotation></semantics></math></p>
+</div>
+<h3 id="q2">Q2</h3>
+<p>答案：</p>
+<div class="answer-block">
+<p>B</p>
+</div>
+<p>原句：</p>
+<div class="note-block">
+<p>The mutual information can be negative in certain condition.</p>
+</div>
+<p>解释：</p>
+<p>这里指单个互信息或点互信息；average mutual information 不会为负。</p>
+<h3 id="q3">Q3</h3>
+<p>答案：</p>
+<div class="answer-block">
+<p>A</p>
+</div>
+<p>原句：</p>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi>h</mi><mi>e</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>y</mi><mi>m</mi><mi>u</mi><mi>s</mi><mi>t</mi><mi>b</mi><mi>e</mi><mi>s</mi><mi>m</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>r</mi><mi>t</mi><mi>h</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>n</mi><mi>y</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>l</mi><mi>e</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>y</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+The ultimate entropy must be smaller than any single entropy.
+</annotation></semantics></math></p>
+</div>
+<p>更严谨写法：</p>
+<div class="note-block">
+<p>The limiting entropy is not greater than any finite-order average
+symbol entropy.</p>
+</div>
+<hr />
+<h2 id="completion-questions">10.2 Completion Questions</h2>
+<h3 id="a">a)</h3>
+<div class="answer-block">
+<p>source, channel, destination</p>
+</div>
+<h3 id="b">b)</h3>
+<div class="answer-block">
+<p>decrease</p>
+</div>
+<p>完整句：</p>
+<div class="note-block">
+<p>As the probability of a certain event increases, its self-information
+would decrease.</p>
+</div>
+<h3 id="c">c)</h3>
+<div class="formula-block">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">min</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">max</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+R(D_{\min}) &amp;= H(X) \\
+R(D_{\max}) &amp;= 0
+\end{aligned}
+</annotation></semantics></math></p>
+</div>
+<h3 id="d">d)</h3>
+<div class="answer-block">
+<p>0 and min{H(X),H(Y)}</p>
+</div>
+<p>完整句：</p>
+<div class="note-block">
+<p>The range of C should be among 0 and min{H(X),H(Y)}.</p>
+</div>
+<hr />
+<h1 id="英文考试答题模板-english-answer-templates">11. 英文考试答题模板
+/ English Answer Templates</h1>
+<h2 id="entropy-calculation">11.1 Entropy Calculation</h2>
+<div class="note-block">
+<p>The entropy of X is calculated as H(X) = -sum_i p(x_i)log p(x_i).
+Substituting the given probabilities, we obtain H(X)=… bit/symbol.</p>
+</div>
+<h2 id="joint-entropy-calculation">11.2 Joint Entropy Calculation</h2>
+<div class="note-block">
+<p>The joint probabilities are obtained by p(x_i,y_j)=p(x_i)p(y_j|x_i).
+Then H(X,Y) = -sum_i sum_j p(x_i,y_j)log p(x_i,y_j). Therefore, H(X,Y)=…
+bit/symbol.</p>
+</div>
+<h2 id="mutual-information-calculation">11.3 Mutual Information
+Calculation</h2>
+<div class="note-block">
+<p>The average mutual information is I(X;Y)=H(X)+H(Y)-H(X,Y).
+Substituting the calculated entropy values gives I(X;Y)=…
+bit/symbol.</p>
+</div>
+<h2 id="markov-stationary-distribution">11.4 Markov Stationary
+Distribution</h2>
+<div class="note-block">
+<p>Let pi be the stationary distribution. It satisfies pi=pi P and sum_i
+pi_i=1. Solving these equations gives pi=(…).</p>
+</div>
+<h2 id="markov-limiting-entropy">11.5 Markov Limiting Entropy</h2>
+<div class="note-block">
+<p>The limiting entropy is the stationary weighted average of the
+conditional entropies: H_infinity = sum_i pi_i H(P_i).</p>
+</div>
+<h2 id="symmetric-channel-capacity">11.6 Symmetric Channel Capacity</h2>
+<div class="note-block">
+<p>For a symmetric channel, the capacity is C = log m - H(row).
+Substituting the row distribution gives C=… bit/symbol.</p>
+</div>
+<h2 id="quasi-symmetric-channel-capacity">11.7 Quasi-Symmetric Channel
+Capacity</h2>
+<div class="note-block">
+<p>The channel is quasi-symmetric. It can be decomposed into symmetric
+subchannels. Using the quasi-symmetric channel capacity formula, we
+obtain C=… bit/symbol.</p>
+</div>
+<h2 id="huffman-coding">11.8 Huffman Coding</h2>
+<div class="note-block">
+<p>We combine the two symbols with the smallest probabilities at each
+step. The resulting Huffman code is … The average code length is L=sum_i
+p_i l_i=… bit/symbol. The coding efficiency is eta=H(X)/L=…%.</p>
+</div>
+<h2 id="linear-block-coding">11.9 Linear Block Coding</h2>
+<div class="note-block">
+<p>The codeword is obtained by x=uG over GF(2). The syndrome is S=wH^T.
+Since the syndrome corresponds to the … column of H, the error is in the
+… bit. Therefore, the corrected codeword is …</p>
+</div>
+<h2 id="error-detection-ability">11.10 Error Detection Ability</h2>
+<div class="note-block">
+<p>A code with minimum Hamming distance d_min can detect up to d_min-1
+errors and correct up to floor((d_min-1)/2) errors.</p>
+</div>
+<hr />
+<h1 id="最后一页速记-one-page-cheat-sheet">12. 最后一页速记 / One-Page
+Cheat Sheet</h1>
+<div class="literal-block">
+<pre class="text"><code>I(x) = -log p(x)
+
+H(X) = -sum p(x)log p(x)
+
+H(X,Y) = -sum sum p(x,y)log p(x,y)
+
+H(Y|X) = -sum sum p(x,y)log p(y|x)
+
+I(X;Y) = H(X)+H(Y)-H(X,Y)
+       = H(X)-H(X|Y)
+       = H(Y)-H(Y|X)
+
+For DMS:
+H(X^N)=N H(X)
+
+Rate distortion:
+R(Dmin)=H(X)
+R(Dmax)=0
+
+Channel capacity:
+C=max I(X;Y)
+0 &lt;= C &lt;= min{H(X),H(Y)}
+
+Symmetric channel:
+C=log m - H(row)
+
+Stationary distribution:
+pi=pi P, sum pi_i=1
+
+Markov limiting entropy:
+H_infinity=sum pi_i H(P_i)
+
+JS divergence:
+JS(p,q)=H((p+q)/2)-[H(p)+H(q)]/2
+
+Average code length:
+L=sum p_i l_i
+
+Coding efficiency:
+eta=H(X)/L
+
+Linear block code:
+x=uG
+S=wH^T
+G=[I|P] -&gt; H=[P^T|I]
+
+Minimum distance:
+Detect d_min-1 errors
+Correct floor((d_min-1)/2) errors</code></pre>
+</div>
+<hr />
+<h1 id="复习题数值答案汇总-numerical-answers-from-the-review-sheet">13.
+复习题数值答案汇总 / Numerical Answers from the Review Sheet</h1>
+<div class="literal-block">
+<pre class="text"><code>Objective questions:
+Single choice: B, B, A
+Completion:
+source / channel / destination
+decrease
+R(Dmin)=H(X), R(Dmax)=0
+0, min{H(X),H(Y)}</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>DMS noisy channel:
+I(a1)=1 bit
+I(a2)=1 bit
+H(X)=1 bit/symbol
+P(Y)=(0.4,0.6)
+H(Y)=0.971 bit/symbol
+H(X,Y)=1.846 bit/symbol
+I(X;Y)=0.125 bit/symbol</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>2-step Markov source:
+State order: 00,01,10,11
+Stationary distribution: (5/18,2/9,2/9,5/18)
+Limiting symbol distribution: P(0)=1/2, P(1)=1/2</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>Channel capacity:
+A: symmetric channel, C=0.6631 bit/symbol
+B: quasi-symmetric channel, C=0.126 bit/symbol
+Medical AI quasi-symmetric channel: C=0.2122 bit/symbol
+Swapping 0.2 and 0.7: capacity remains unchanged</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>Five-symbol coding:
+P=(0.4,0.2,0.2,0.1,0.1)
+Fenno average length: 2.2 bit/symbol
+Huffman average length: 2.2 bit/symbol
+H(X)=2.122 bit/symbol
+Efficiency=96.45%</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>Sensor Huffman:
+P(A,B,C,D)=(0.4,0.3,0.2,0.1)
+Code: A=1, B=01, C=000, D=001
+L=1.9 bit/symbol
+H(X)=1.8464 bit/symbol
+Efficiency=97.18%</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>Linear block code:
+M=(100) -&gt; codeword 100110
+Received 101111 -&gt; corrected codeword 101011
+d_min=3 for that code
+Can correct 1 error and detect 2 errors
+
+Another LBC:
+u=[101] -&gt; 101101
+d_min=2
+Can detect 1 error</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>Weather-health:
+P_X=(1/4,1/3,5/12)
+P_Y=(2/3,1/3)
+H(X)=1.5546
+H(Y)=0.9183
+H(X,Y)=2.4591
+I(X;Y)=0.0138</code></pre>
+</div>
+<div class="literal-block">
+<pre class="text"><code>Study-habit Markov + JS:
+JS((0.7,0.3),(0.4,0.6))=0.0462
+Stationary distribution=(4/7,3/7)
+H_infinity=0.9199 bit/symbol</code></pre>
+</div>
+</body>
+</html>
