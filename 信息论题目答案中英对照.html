@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>信息论题目答案中英对照</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <style>
+  :root {
+    --bg: #f7f1e8;
+    --paper: #fffdf9;
+    --ink: #22303a;
+    --muted: #6b7680;
+    --line: #dbcbb5;
+    --accent: #a34a28;
+    --accent-soft: #f7e7d8;
+    --question: #f4f8fb;
+    --answer: #f8f2e7;
+  }
+
+  html {
+    color: var(--ink);
+    background:
+      radial-gradient(circle at top right, rgba(163, 74, 40, 0.08), transparent 24%),
+      linear-gradient(180deg, #f6efe5 0%, #faf7f1 24%, #fdfcf8 100%);
+  }
+
+  body {
+    margin: 0 auto;
+    max-width: 1120px;
+    padding: 36px 18px 72px;
+    font-family: "STIX Two Text", "Noto Serif SC", Georgia, "Times New Roman", serif;
+    line-height: 1.72;
+  }
+
+  header {
+    margin-bottom: 2.4rem;
+  }
+
+  h1, h2, h3, h4 {
+    color: #2b231b;
+    line-height: 1.3;
+  }
+
+  h1 {
+    font-size: 2.35rem;
+    margin-bottom: 0.7rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 3px solid var(--line);
+  }
+
+  h2 {
+    margin-top: 2.6rem;
+    border-top: 1px solid rgba(163, 74, 40, 0.18);
+    padding-top: 0.8rem;
+  }
+
+  h3 {
+    margin-top: 1.9rem;
+    color: #7b341e;
+  }
+
+  h4 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+  }
+
+  #TOC {
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(163, 74, 40, 0.12);
+    border-radius: 18px;
+    padding: 1.15rem 1.25rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 12px 28px rgba(61, 43, 27, 0.06);
+  }
+
+  #TOC ul {
+    padding-left: 1.2rem;
+  }
+
+  #TOC a {
+    color: #7a341d;
+    text-decoration: none;
+  }
+
+  #TOC a:hover {
+    text-decoration: underline;
+  }
+
+  blockquote {
+    margin: 1rem 0 1.4rem;
+    padding: 0.95rem 1rem;
+    border-left: 4px solid var(--accent);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--muted);
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid rgba(163, 74, 40, 0.16);
+    margin: 2rem 0;
+  }
+
+  p code, li code {
+    background: rgba(163, 74, 40, 0.08);
+    border-radius: 0.35rem;
+    padding: 0.08rem 0.35rem;
+  }
+
+  .qa-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.35rem;
+  }
+
+  .qa-card {
+    padding: 1.05rem 1.05rem 1.1rem;
+    border-radius: 18px;
+    border: 1px solid rgba(117, 83, 52, 0.14);
+    box-shadow: 0 12px 30px rgba(63, 46, 28, 0.05);
+    overflow-x: auto;
+  }
+
+  .question-card {
+    background: linear-gradient(180deg, rgba(248, 252, 255, 0.94), rgba(238, 245, 250, 0.92));
+  }
+
+  .answer-card {
+    background: linear-gradient(180deg, rgba(255, 251, 245, 0.95), rgba(247, 238, 224, 0.96));
+    border-left: 4px solid var(--accent);
+  }
+
+  .qa-card p:first-child,
+  .qa-card h4:first-child {
+    margin-top: 0;
+  }
+
+  .qa-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .inline-figure {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0.9rem 0;
+    border-radius: 14px;
+    border: 1px solid rgba(117, 83, 52, 0.14);
+    box-shadow: 0 10px 24px rgba(63, 46, 28, 0.06);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.2rem;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(63, 46, 28, 0.05);
+  }
+
+  th, td {
+    padding: 0.68rem 0.78rem;
+    border: 1px solid rgba(117, 83, 52, 0.14);
+    text-align: center;
+  }
+
+  thead th {
+    background: #efe2cf;
+  }
+
+  tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.76);
+  }
+
+  tbody tr:nth-child(even) {
+    background: rgba(248, 243, 236, 0.96);
+  }
+
+  math[display="block"] {
+    margin: 0.45rem auto;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 860px) {
+    .qa-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 720px) {
+    body {
+      padding: 22px 14px 48px;
+    }
+
+    h1 {
+      font-size: 1.92rem;
+    }
+  }
+
+  @media print {
+    html {
+      background: #fff;
+    }
+
+    body {
+      max-width: none;
+      padding: 0;
+    }
+
+    #TOC,
+    .qa-card,
+    table,
+    .inline-figure {
+      box-shadow: none;
+    }
+  }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">信息论题目答案中英对照</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#信息论题目答案中英对照-bilingual-questions-and-answers-for-information-theory-review"
+id="toc-信息论题目答案中英对照-bilingual-questions-and-answers-for-information-theory-review">信息论题目答案中英对照
+/ Bilingual Questions and Answers for Information Theory Review</a>
+<ul>
+<li><a href="#part-i.-objective-questions-第一部分客观题"
+id="toc-part-i.-objective-questions-第一部分客观题">Part I. Objective
+Questions / 第一部分：客观题</a>
+<ul>
+<li><a href="#single-choice-question-1-单选题-1"
+id="toc-single-choice-question-1-单选题-1">1. Single-Choice Question 1 /
+单选题 1</a></li>
+<li><a href="#single-choice-question-2-单选题-2"
+id="toc-single-choice-question-2-单选题-2">2. Single-Choice Question 2 /
+单选题 2</a></li>
+<li><a href="#single-choice-question-3-单选题-3"
+id="toc-single-choice-question-3-单选题-3">3. Single-Choice Question 3 /
+单选题 3</a></li>
+<li><a href="#completion-questions-填空题"
+id="toc-completion-questions-填空题">4. Completion Questions /
+填空题</a></li>
+</ul></li>
+<li><a
+href="#part-ii.-calculation-and-coding-problems-第二部分计算与编码题"
+id="toc-part-ii.-calculation-and-coding-problems-第二部分计算与编码题">Part
+II. Calculation and Coding Problems / 第二部分：计算与编码题</a>
+<ul>
+<li><a href="#a.-dms-through-a-noisy-channel-离散无记忆信源经噪声信道"
+id="toc-a.-dms-through-a-noisy-channel-离散无记忆信源经噪声信道">3A. DMS
+Through a Noisy Channel / 离散无记忆信源经噪声信道</a></li>
+<li><a href="#b.-binary-2-step-markov-chain-二阶二元-markov-链"
+id="toc-b.-binary-2-step-markov-chain-二阶二元-markov-链">3B. Binary
+2-Step Markov Chain / 二阶二元 Markov 链</a></li>
+<li><a href="#discrete-no-memory-channels-离散无记忆信道"
+id="toc-discrete-no-memory-channels-离散无记忆信道">4. Discrete
+No-Memory Channels / 离散无记忆信道</a></li>
+<li><a href="#five-symbol-dms-coding-五符号信源编码"
+id="toc-five-symbol-dms-coding-五符号信源编码">5. Five-Symbol DMS Coding
+/ 五符号信源编码</a></li>
+<li><a href="#linear-block-code-63-线性分组码"
+id="toc-linear-block-code-63-线性分组码">6. (6,3) Linear Block Code /
+<code>(6,3)</code> 线性分组码</a></li>
+<li><a
+href="#iii.-another-63-linear-block-coding-problem-另一道-63-线性分组码题"
+id="toc-iii.-another-63-linear-block-coding-problem-另一道-63-线性分组码题">III.
+Another <code>(6,3)</code> Linear Block Coding Problem / 另一道
+<code>(6,3)</code> 线性分组码题</a></li>
+<li><a href="#iv.-weather-and-health-天气与健康联合题"
+id="toc-iv.-weather-and-health-天气与健康联合题">IV. Weather and Health
+/ 天气与健康联合题</a></li>
+<li><a href="#v.-study-habits-markov-chain-学习习惯-markov-链"
+id="toc-v.-study-habits-markov-chain-学习习惯-markov-链">V. Study Habits
+Markov Chain / 学习习惯 Markov 链</a></li>
+<li><a href="#vi.-medical-ai-quasi-symmetric-channel-医疗-ai-准对称信道"
+id="toc-vi.-medical-ai-quasi-symmetric-channel-医疗-ai-准对称信道">VI.
+Medical AI Quasi-Symmetric Channel / 医疗 AI 准对称信道</a></li>
+<li><a href="#vii.-sensor-huffman-coding-传感器-huffman-编码"
+id="toc-vii.-sensor-huffman-coding-传感器-huffman-编码">VII. Sensor
+Huffman Coding / 传感器 Huffman 编码</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="信息论题目答案中英对照-bilingual-questions-and-answers-for-information-theory-review">信息论题目答案中英对照
+/ Bilingual Questions and Answers for Information Theory Review</h1>
+<blockquote>
+<p>说明 / Note: 本页依据 <code>复习题-2026 2.docx</code> 与
+<code>信息论复习题满分复习文档.md</code> 整理。原 <code>docx</code>
+中一部分题干公式是 <code>WMF</code>
+图片，无法直接提取为可编辑公式；这部分已尽量按现有答案与上下文重排。极少数无法可靠恢复的题干图形，会保留“原卷图示见下”或“按原卷矩阵”说明。<br />
+Unless otherwise stated, all logarithms are base 2 and all entropy
+quantities are measured in <code>bit/symbol</code>.</p>
+</blockquote>
+<hr />
+<h2 id="part-i.-objective-questions-第一部分客观题">Part I. Objective
+Questions / 第一部分：客观题</h2>
+<h3 id="single-choice-question-1-单选题-1">1. Single-Choice Question 1 /
+单选题 1</h3>
+<div class="qa-grid">
+<section id="question-题目" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> For the entropy of a single-symbol discrete
+source and the entropy of its <code>N</code>-th extension, which
+statement is correct?</p>
+<p><strong>中.</strong> 对于单符号离散信源的熵与其 <code>N</code>
+次扩展信源的熵，哪一个关系正确？</p>
+<p><strong>Recoverable relation / 可恢复的正确关系</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>X</mi><mi>N</mi></msup><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>N</mi><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H(X^N)=N H(X)
+</annotation></semantics></math></p>
+<p><strong>Source note / 原卷说明</strong></p>
+<p>The option formulas in the original <code>docx</code> were embedded
+as image-only equations.<br />
+原卷选项公式为图片化公式，这里保留其正确关系。</p>
+</section>
+<section id="answer-答案" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Correct choice / 正确答案:</strong> <code>B</code></p>
+<p><strong>EN.</strong> For a discrete memoryless source, the entropy of
+the <code>N</code>-th extension is <code>N</code> times the
+single-symbol entropy.</p>
+<p><strong>中.</strong> 对离散无记忆信源，<code>N</code>
+次扩展信源的熵等于单符号熵的 <code>N</code> 倍。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><msup><mi>X</mi><mi>N</mi></msup><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>N</mi><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+H(X^N)=N H(X)
+</annotation></semantics></math></p>
+</section>
+</div>
+<h3 id="single-choice-question-2-单选题-2">2. Single-Choice Question 2 /
+单选题 2</h3>
+<div class="qa-grid">
+<section id="question-题目-1" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> What is right in the following statement?</p>
+<p><code>A.</code> The average mutual information can be negative.<br />
+<code>B.</code> The mutual information can be negative in certain
+condition.<br />
+<code>C.</code> For the entropy of certain source, it can increase to
+infinity.<br />
+<code>D.</code> The channel capacity must be larger than any rate
+distortion function.</p>
+<p><strong>中.</strong> 下列说法哪个正确？</p>
+<p><code>A.</code> 平均互信息可以为负。<br />
+<code>B.</code> 互信息在某些条件下可以为负。<br />
+<code>C.</code> 某个信源的熵可以增大到无穷。<br />
+<code>D.</code> 信道容量一定大于任意率失真函数。</p>
+</section>
+<section id="answer-答案-1" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Correct choice / 正确答案:</strong> <code>B</code></p>
+<p><strong>EN.</strong> In this review sheet, “mutual information”
+refers to pointwise mutual information. Pointwise mutual information may
+be negative, while average mutual information is always
+non-negative.</p>
+<p><strong>中.</strong> 这道题里的 <code>mutual information</code>
+指单个事件互信息，也就是点互信息。点互信息可以为负，但平均互信息一定非负。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>≥</mo><mn>0</mn><mo>,</mo><mspace width="2.0em"></mspace><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>;</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mfrac><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>,</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false" form="postfix">)</mo><mi>p</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>j</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+I(X;Y)\ge 0,\qquad
+I(x_i;y_j)=\log\frac{p(x_i,y_j)}{p(x_i)p(y_j)}
+</annotation></semantics></math></p>
+</section>
+</div>
+<h3 id="single-choice-question-3-单选题-3">3. Single-Choice Question 3 /
+单选题 3</h3>
+<div class="qa-grid">
+<section id="question-题目-2" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> The ultimate entropy satisfies which
+statement?</p>
+<p><strong>中.</strong> 极限熵满足下列哪个说法？</p>
+<p><strong>Recoverable meaning / 可恢复题意</strong></p>
+<p>The question asks about the relation between limiting entropy and
+finite-order entropies.<br />
+本题考查极限熵与各阶平均符号熵之间的关系。</p>
+</section>
+<section id="answer-答案-2" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Correct choice / 正确答案:</strong> <code>A</code></p>
+<p><strong>EN.</strong> The limiting entropy is not greater than any
+finite-order average symbol entropy.</p>
+<p><strong>中.</strong> 极限熵不大于任意有限阶平均符号熵。</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mi>∞</mi></msub><mo>≤</mo><mi>⋯</mi><mo>≤</mo><mfrac><msub><mi>H</mi><mi>N</mi></msub><mi>N</mi></mfrac><mo>≤</mo><mi>⋯</mi><mo>≤</mo><mfrac><msub><mi>H</mi><mn>2</mn></msub><mn>2</mn></mfrac><mo>≤</mo><msub><mi>H</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">
+H_{\infty}\le \cdots \le \frac{H_N}{N}\le \cdots \le \frac{H_2}{2}\le H_1
+</annotation></semantics></math></p>
+</section>
+</div>
+<h3 id="completion-questions-填空题">4. Completion Questions /
+填空题</h3>
+<div class="qa-grid">
+<section id="questions-题目" class="qa-card question-card">
+<h4>Questions / 题目</h4>
+<p><strong>a) EN.</strong> The components for the Shannon communication
+system include ______, ______ and ______.<br />
+<strong>a) 中.</strong> Shannon 通信系统的组成包括 ______、______ 和
+______。</p>
+<p><strong>b) EN.</strong> As the probability of a certain event
+increases, its self-information would ______.<br />
+<strong>b) 中.</strong> 当某事件概率增大时，它的自信息会 ______。</p>
+<p><strong>c) EN.</strong> For the rate-distortion function,
+<code>R(D_min)=______</code>, while <code>R(D_max)=______</code>.<br />
+<strong>c) 中.</strong> 对率失真函数，有
+<code>R(D_min)=______</code>，而 <code>R(D_max)=______</code>。</p>
+<p><strong>d) EN.</strong> For the channel capacity <code>C</code> from
+source <code>X</code> to destination <code>Y</code>, the range for
+<code>C</code> should be among ______ and ______.<br />
+<strong>d) 中.</strong> 对从信源 <code>X</code> 到信宿 <code>Y</code>
+的信道容量 <code>C</code>，其范围应在 ______ 与 ______ 之间。</p>
+</section>
+<section id="answers-答案" class="qa-card answer-card">
+<h4>Answers / 答案</h4>
+<p><strong>a)</strong> <code>source, channel, destination</code><br />
+<strong>中.</strong> <code>信源，信道，信宿</code></p>
+<p><strong>b)</strong> <code>decrease</code><br />
+<strong>中.</strong> <code>减小</code></p>
+<p><strong>c)</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">min</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>R</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>D</mi><mi mathvariant="normal">max</mi></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+R(D_{\min}) &amp;= H(X) \\
+R(D_{\max}) &amp;= 0
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>d)</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>C</mi><mo>≤</mo><mrow><mi mathvariant="normal">min</mi><mo>&#8289;</mo></mrow><mo stretchy="false" form="prefix">{</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">
+0\le C\le \min\{H(X),H(Y)\}
+</annotation></semantics></math></p>
+</section>
+</div>
+<hr />
+<h2
+id="part-ii.-calculation-and-coding-problems-第二部分计算与编码题">Part
+II. Calculation and Coding Problems / 第二部分：计算与编码题</h2>
+<h3 id="a.-dms-through-a-noisy-channel-离散无记忆信源经噪声信道">3A. DMS
+Through a Noisy Channel / 离散无记忆信源经噪声信道</h3>
+<div class="qa-grid">
+<section id="question-题目-3" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> Assume the probability space of one discrete
+memoryless source is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mo>,</mo><mspace width="2.0em"></mspace><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">
+P(a_1)=0.5,\qquad P(a_2)=0.5
+</annotation></semantics></math></p>
+<p>and the noisy channel transition matrix is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo>∣</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.8</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>Y</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>b</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(Y\mid X)=
+\begin{bmatrix}
+0.6 &amp; 0.4 \\
+0.2 &amp; 0.8
+\end{bmatrix},
+\qquad
+Y=\{b_1,b_2\}.
+</annotation></semantics></math></p>
+<p>Calculate:</p>
+<ol type="1">
+<li><code>I(a_1)</code> and <code>I(a_2)</code></li>
+<li><code>H(X)</code></li>
+<li><code>H(Y)</code></li>
+<li><code>H(X,Y)</code></li>
+<li><code>I(X;Y)</code></li>
+</ol>
+<p><strong>中.</strong> 设某离散无记忆信源满足</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mo>,</mo><mspace width="2.0em"></mspace><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">
+P(a_1)=0.5,\qquad P(a_2)=0.5
+</annotation></semantics></math></p>
+<p>其经过噪声信道后的转移矩阵为</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo>∣</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.8</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>Y</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>b</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(Y\mid X)=
+\begin{bmatrix}
+0.6 &amp; 0.4 \\
+0.2 &amp; 0.8
+\end{bmatrix},
+\qquad
+Y=\{b_1,b_2\}.
+</annotation></semantics></math></p>
+<p>求：</p>
+<ol type="1">
+<li><code>I(a_1)</code> 和 <code>I(a_2)</code></li>
+<li><code>H(X)</code></li>
+<li><code>H(Y)</code></li>
+<li><code>H(X,Y)</code></li>
+<li><code>I(X;Y)</code></li>
+</ol>
+</section>
+<section id="answer-答案-3" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Self-information / 自信息</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.5</mn><mo>=</mo><mn>1</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.5</mn><mo>=</mo><mn>1</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+I(a_1) &amp;= -\log 0.5 = 1\ \text{bit}\\
+I(a_2) &amp;= -\log 0.5 = 1\ \text{bit}
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Source entropy / 信源熵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>1</mn><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mn>1</mn><mo>=</mo><mn>1</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext></mrow><annotation encoding="application/x-tex">
+H(X)=0.5\cdot 1+0.5\cdot 1=1\ \text{bit/symbol}
+</annotation></semantics></math></p>
+<p><strong>Marginal distribution of <code>Y</code> / <code>Y</code>
+的边缘分布</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>b</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.6</mn><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mn>0.2</mn><mo>=</mo><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.4</mn><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mn>0.8</mn><mo>=</mo><mn>0.6</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(b_1) &amp;= 0.5\cdot 0.6+0.5\cdot 0.2=0.4\\
+P(b_2) &amp;= 0.5\cdot 0.4+0.5\cdot 0.8=0.6
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Entropy of <code>Y</code> / <code>Y</code> 的熵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn><mo>−</mo><mn>0.6</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.6</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.97095</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≈</mo><mn>0.971</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+H(Y) &amp;= -0.4\log 0.4-0.6\log 0.6\\
+     &amp;= 0.97095\ \text{bit/symbol}\\
+     &amp;\approx 0.971\ \text{bit/symbol}
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Joint distribution / 联合分布</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.6</mn><mo>=</mo><mn>0.3</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.4</mn><mo>=</mo><mn>0.2</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>1</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.2</mn><mo>=</mo><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5</mn><mo>⋅</mo><mn>0.8</mn><mo>=</mo><mn>0.4</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(a_1,b_1)&amp;=0.5\cdot 0.6=0.3\\
+P(a_1,b_2)&amp;=0.5\cdot 0.4=0.2\\
+P(a_2,b_1)&amp;=0.5\cdot 0.2=0.1\\
+P(a_2,b_2)&amp;=0.5\cdot 0.8=0.4
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Joint entropy / 联合熵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.3</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.3</mn><mo>−</mo><mn>0.2</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo>−</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.1</mn><mo>−</mo><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.5211</mn><mo>+</mo><mn>0.4644</mn><mo>+</mo><mn>0.3322</mn><mo>+</mo><mn>0.5288</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.8465</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+H(X,Y)
+&amp;=-0.3\log 0.3-0.2\log 0.2-0.1\log 0.1-0.4\log 0.4\\
+&amp;=0.5211+0.4644+0.3322+0.5288\\
+&amp;=1.8465\ \text{bit/symbol}
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Average mutual information / 平均互信息</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>+</mo><mn>0.97095</mn><mo>−</mo><mn>1.8465</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.1245</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≈</mo><mn>0.125</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+I(X;Y)
+&amp;=H(X)+H(Y)-H(X,Y)\\
+&amp;=1+0.97095-1.8465\\
+&amp;=0.1245\ \text{bit/symbol}\\
+&amp;\approx 0.125\ \text{bit/symbol}
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Note / 说明</strong></p>
+<p>The original handwritten line had a typo in the last formula; the
+correct relation is <code>I(X;Y)=H(X)+H(Y)-H(X,Y)</code>.<br />
+原卷最后一行公式存在笔误，正确公式应为
+<code>I(X;Y)=H(X)+H(Y)-H(X,Y)</code>。</p>
+</section>
+</div>
+<h3 id="b.-binary-2-step-markov-chain-二阶二元-markov-链">3B. Binary
+2-Step Markov Chain / 二阶二元 Markov 链</h3>
+<div class="qa-grid">
+<section id="question-题目-4" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> There exists a binary 2-step Markov chain with
+source symbol set <code>{0,1}</code> and transition probabilities</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.6</mn><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.4</mn><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(0\mid 00)&amp;=P(1\mid 11)=0.6,\\
+P(1\mid 00)&amp;=P(0\mid 11)=0.4,\\
+P(0\mid 01)&amp;=P(0\mid 10)=P(1\mid 01)=P(1\mid 10)=0.5.
+\end{aligned}
+</annotation></semantics></math></p>
+<p>Please:</p>
+<ol type="1">
+<li>draw the state transition graph,</li>
+<li>give the state transition matrix,</li>
+<li>calculate the stationary distribution,</li>
+<li>give the limiting distribution of symbols <code>0</code> and
+<code>1</code>.</li>
+</ol>
+<p><strong>中.</strong> 设有一个二元二阶 Markov 链，符号集为
+<code>{0,1}</code>，转移概率为</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.6</mn><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.4</mn><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.5</mn><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(0\mid 00)&amp;=P(1\mid 11)=0.6,\\
+P(1\mid 00)&amp;=P(0\mid 11)=0.4,\\
+P(0\mid 01)&amp;=P(0\mid 10)=P(1\mid 01)=P(1\mid 10)=0.5.
+\end{aligned}
+</annotation></semantics></math></p>
+<p>求：</p>
+<ol type="1">
+<li>状态转移图，</li>
+<li>状态转移矩阵，</li>
+<li>平稳分布，</li>
+<li>符号 <code>0</code> 与 <code>1</code> 的极限分布。</li>
+</ol>
+</section>
+<section id="answer-答案-4" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>State definition / 状态定义</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mn>1</mn></msub><mo>=</mo><mn>00</mn><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>S</mi><mn>2</mn></msub><mo>=</mo><mn>01</mn><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>S</mi><mn>3</mn></msub><mo>=</mo><mn>10</mn><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>S</mi><mn>4</mn></msub><mo>=</mo><mn>11</mn></mrow><annotation encoding="application/x-tex">
+S_1=00,\qquad S_2=01,\qquad S_3=10,\qquad S_4=11
+</annotation></semantics></math></p>
+<p><strong>State transition description / 状态转移写法</strong></p>
+<p><code>00→00</code> with probability <code>0.6</code>,
+<code>00→01</code> with probability <code>0.4</code><br />
+<code>01→10</code> with probability <code>0.5</code>, <code>01→11</code>
+with probability <code>0.5</code><br />
+<code>10→00</code> with probability <code>0.5</code>, <code>10→01</code>
+with probability <code>0.5</code><br />
+<code>11→10</code> with probability <code>0.4</code>, <code>11→11</code>
+with probability <code>0.6</code></p>
+<p><strong>Transition matrix / 转移矩阵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+P=
+\begin{bmatrix}
+0.6 &amp; 0.4 &amp; 0   &amp; 0 \\
+0   &amp; 0   &amp; 0.5 &amp; 0.5 \\
+0.5 &amp; 0.5 &amp; 0   &amp; 0 \\
+0   &amp; 0   &amp; 0.4 &amp; 0.6
+\end{bmatrix}
+</annotation></semantics></math></p>
+<p><strong>Stationary distribution / 平稳分布</strong></p>
+<p>Let <code>w=(w_1,w_2,w_3,w_4)</code> for states
+<code>(00,01,10,11)</code>. Then</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>w</mi><mi>P</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>w</mi><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>w</mi><mn>1</mn></msub><mo>+</mo><msub><mi>w</mi><mn>2</mn></msub><mo>+</mo><msub><mi>w</mi><mn>3</mn></msub><mo>+</mo><msub><mi>w</mi><mn>4</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+wP&amp;=w,\\
+w_1+w_2+w_3+w_4&amp;=1.
+\end{aligned}
+</annotation></semantics></math></p>
+<p>Solving gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>5</mn><mn>18</mn></mfrac><mo>,</mo><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>,</mo><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>,</mo><mfrac><mn>5</mn><mn>18</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+w=\left(\frac{5}{18},\frac{2}{9},\frac{2}{9},\frac{5}{18}\right).
+</annotation></semantics></math></p>
+<p><strong>Limiting symbol distribution / 极限符号分布</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>00</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>1</mn></msub><mo>+</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>01</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>2</mn></msub><mo>+</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>10</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>3</mn></msub><mo>+</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>∣</mo><mn>11</mn><mo stretchy="false" form="postfix">)</mo><msub><mi>w</mi><mn>4</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.6</mn><mo>⋅</mo><mfrac><mn>5</mn><mn>18</mn></mfrac><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>+</mo><mn>0.5</mn><mo>⋅</mo><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>+</mo><mn>0.4</mn><mo>⋅</mo><mfrac><mn>5</mn><mn>18</mn></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+P(0)
+&amp;=P(0\mid 00)w_1+P(0\mid 01)w_2+P(0\mid 10)w_3+P(0\mid 11)w_4\\
+&amp;=0.6\cdot\frac{5}{18}+0.5\cdot\frac{2}{9}+0.5\cdot\frac{2}{9}+0.4\cdot\frac{5}{18}\\
+&amp;=\frac{1}{2},
+\end{aligned}
+</annotation></semantics></math></p>
+<p>so</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(1)=1-P(0)=\frac{1}{2}.
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> The limiting distribution of symbols is
+<code>(1/2,1/2)</code>.<br />
+<strong>中.</strong> 符号的极限分布为 <code>(1/2,1/2)</code>。</p>
+</section>
+</div>
+<h3 id="discrete-no-memory-channels-离散无记忆信道">4. Discrete
+No-Memory Channels / 离散无记忆信道</h3>
+<div class="qa-grid">
+<section id="question-题目-5" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> For channel <code>A</code> and channel
+<code>B</code> in the original review sheet:</p>
+<ol type="1">
+<li>determine the channel type of <code>A</code> and
+<code>B</code>;</li>
+<li>calculate the corresponding channel capacities.</li>
+</ol>
+<p>For channel <code>A</code>, the recoverable symmetric row
+distribution is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>4</mn><mn>5</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>10</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>10</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\left(\frac{4}{5},\frac{1}{10},\frac{1}{10}\right).
+</annotation></semantics></math></p>
+<p>One standard symmetric realization is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mfrac><mn>4</mn><mn>5</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>4</mn><mn>5</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>4</mn><mn>5</mn></mfrac></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+A=
+\begin{bmatrix}
+\frac{4}{5} &amp; \frac{1}{10} &amp; \frac{1}{10}\\
+\frac{1}{10} &amp; \frac{4}{5} &amp; \frac{1}{10}\\
+\frac{1}{10} &amp; \frac{1}{10} &amp; \frac{4}{5}
+\end{bmatrix}.
+</annotation></semantics></math></p>
+<p>The exact matrix for channel <code>B</code> in the source
+<code>docx</code> was embedded as an image-only formula and cannot be
+recovered reliably as editable math, but its type and capacity are
+preserved in the answer.</p>
+<p><strong>中.</strong> 对原复习题中的信道 <code>A</code> 与
+<code>B</code>：</p>
+<ol type="1">
+<li>判断 <code>A</code> 与 <code>B</code> 的信道类型；</li>
+<li>计算各自的信道容量。</li>
+</ol>
+<p>其中 <code>A</code> 信道可恢复出的对称行分布为</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>4</mn><mn>5</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>10</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>10</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\left(\frac{4}{5},\frac{1}{10},\frac{1}{10}\right),
+</annotation></semantics></math></p>
+<p>可写成一个标准对称矩阵</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mfrac><mn>4</mn><mn>5</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>4</mn><mn>5</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>1</mn><mn>10</mn></mfrac></mtd><mtd columnalign="center" style="text-align: center"><mfrac><mn>4</mn><mn>5</mn></mfrac></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+A=
+\begin{bmatrix}
+\frac{4}{5} &amp; \frac{1}{10} &amp; \frac{1}{10}\\
+\frac{1}{10} &amp; \frac{4}{5} &amp; \frac{1}{10}\\
+\frac{1}{10} &amp; \frac{1}{10} &amp; \frac{4}{5}
+\end{bmatrix}.
+</annotation></semantics></math></p>
+<p>原卷 <code>B</code>
+信道矩阵是图片化公式，无法可靠恢复为可编辑数学，但其类型和标准答案可以保留。</p>
+</section>
+<section id="answer-答案-5" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Channel types / 信道类型</strong></p>
+<p><code>A:</code> symmetric channel / 对称信道<br />
+<code>B:</code> quasi-symmetric channel / 准对称信道</p>
+<p><strong>Capacity of <code>A</code> / <code>A</code>
+的容量</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>C</mi><mi>A</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>3</mn><mo>−</mo><mi>H</mi><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>4</mn><mn>5</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>10</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>10</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.5850</mn><mo>−</mo><mn>0.9219</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.6631</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+C_A
+&amp;=\log 3-H\!\left(\frac{4}{5},\frac{1}{10},\frac{1}{10}\right)\\
+&amp;=1.5850-0.9219\\
+&amp;=0.6631\ \text{bit/symbol}
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Capacity of <code>B</code> / <code>B</code>
+的容量</strong></p>
+<p>The review sheet gives the quasi-symmetric decomposition
+constants</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>N</mi><mn>1</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>M</mi><mn>1</mn></msub><mo>=</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>N</mi><mn>2</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>M</mi><mn>2</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>N</mi><mn>3</mn></msub><mo>=</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>M</mi><mn>3</mn></msub><mo>=</mo><mn>1</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
+N_1=\frac{1}{3},\quad M_1=\frac{2}{3},\quad
+N_2=\frac{1}{6},\quad M_2=\frac{1}{3},\quad
+N_3=\frac{1}{2},\quad M_3=1.
+</annotation></semantics></math></p>
+<p>Using the capacity expression from the sheet,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>C</mi><mi>B</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>2</mn><mo>−</mo><mi>H</mi><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mn>6</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><msub><mi>N</mi><mn>1</mn></msub><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><msub><mi>M</mi><mn>1</mn></msub><mo>−</mo><msub><mi>N</mi><mn>2</mn></msub><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><msub><mi>M</mi><mn>2</mn></msub><mo>−</mo><msub><mi>N</mi><mn>3</mn></msub><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><msub><mi>M</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>−</mo><mn>1.459</mn><mo>+</mo><mn>0.1950</mn><mo>+</mo><mn>0.3900</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>≈</mo><mn>0.126</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+C_B
+&amp;=\log 2-H\!\left(\frac{1}{6},\frac{1}{3},\frac{1}{2}\right)
+-N_1\log M_1-N_2\log M_2-N_3\log M_3\\
+&amp;=1-1.459+0.1950+0.3900\\
+&amp;\approx 0.126\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> Channel <code>B</code> is quasi-symmetric, and
+its capacity is <code>0.126 bit/symbol</code>.<br />
+<strong>中.</strong> <code>B</code> 为准对称信道，其容量为
+<code>0.126 bit/symbol</code>。</p>
+</section>
+</div>
+<h3 id="five-symbol-dms-coding-五符号信源编码">5. Five-Symbol DMS Coding
+/ 五符号信源编码</h3>
+<div class="qa-grid">
+<section id="question-题目-6" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> For a DMS with probability distribution</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>a</mi><mn>3</mn></msub><mo>,</mo><msub><mi>a</mi><mn>4</mn></msub><mo>,</mo><msub><mi>a</mi><mn>5</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.1</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
+P(a_1,a_2,a_3,a_4,a_5)=(0.4,0.2,0.2,0.1,0.1),
+</annotation></semantics></math></p>
+<p>please:</p>
+<ol type="1">
+<li>provide a sensible Shannon-Fano coding and the unique Huffman
+coding,</li>
+<li>calculate both average code lengths,</li>
+<li>calculate the coding efficiencies.</li>
+</ol>
+<p><strong>中.</strong> 对概率分布为</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>a</mi><mn>3</mn></msub><mo>,</mo><msub><mi>a</mi><mn>4</mn></msub><mo>,</mo><msub><mi>a</mi><mn>5</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.1</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
+P(a_1,a_2,a_3,a_4,a_5)=(0.4,0.2,0.2,0.1,0.1)
+</annotation></semantics></math></p>
+<p>的离散无记忆信源，求：</p>
+<ol type="1">
+<li>合理的 Shannon-Fano 编码与唯一 Huffman 编码，</li>
+<li>两种编码的平均码长，</li>
+<li>两种编码的编码效率。</li>
+</ol>
+</section>
+<section id="answer-答案-6" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Shannon-Fano code / Shannon-Fano 码</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>0</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>100</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>101</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>4</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>110</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>5</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>111</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+a_1&amp;\to 0\\
+a_2&amp;\to 100\\
+a_3&amp;\to 101\\
+a_4&amp;\to 110\\
+a_5&amp;\to 111
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Huffman code / Huffman 码</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>01</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>001</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>4</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>0000</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>a</mi><mn>5</mn></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>0001</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+a_1&amp;\to 1\\
+a_2&amp;\to 01\\
+a_3&amp;\to 001\\
+a_4&amp;\to 0000\\
+a_5&amp;\to 0001
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Average lengths / 平均码长</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mover><mi>K</mi><mo accent="true">‾</mo></mover><mtext mathvariant="normal">Fano</mtext></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>⋅</mo><mn>0.4</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.1</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>2.2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+\bar K_{\text{Fano}}
+&amp;=1\cdot 0.4+3\cdot 0.2+3\cdot 0.2+3\cdot 0.1+3\cdot 0.1\\
+&amp;=2.2\ \text{bit/symbol},
+\end{aligned}
+</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mover><mi>K</mi><mo accent="true">‾</mo></mover><mtext mathvariant="normal">Huffman</mtext></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>⋅</mo><mn>0.4</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>0.2</mn><mo>+</mo><mn>4</mn><mo>⋅</mo><mn>0.1</mn><mo>+</mo><mn>4</mn><mo>⋅</mo><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>2.2</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+\bar K_{\text{Huffman}}
+&amp;=1\cdot 0.4+2\cdot 0.2+3\cdot 0.2+4\cdot 0.1+4\cdot 0.1\\
+&amp;=2.2\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Source entropy / 信源熵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn><mo>−</mo><mn>2</mn><mo>⋅</mo><mn>0.2</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo>−</mo><mn>2</mn><mo>⋅</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>2.122</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+H(X)
+&amp;=-0.4\log 0.4-2\cdot 0.2\log 0.2-2\cdot 0.1\log 0.1\\
+&amp;=2.122\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Coding efficiency / 编码效率</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>=</mo><mfrac><mn>2.122</mn><mn>2.2</mn></mfrac><mo>=</mo><mn>0.9645</mn><mo>=</mo><mn>96.45</mn><mi>%</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\eta=\frac{2.122}{2.2}=0.9645=96.45\%.
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> Both codes have the same average code length
+<code>2.2 bit/symbol</code>, and the coding efficiency is about
+<code>96.45%</code>.<br />
+<strong>中.</strong> 两种编码平均码长相同，均为
+<code>2.2 bit/symbol</code>，编码效率约为 <code>96.45%</code>。</p>
+</section>
+</div>
+<h3 id="linear-block-code-63-线性分组码">6. (6,3) Linear Block Code /
+<code>(6,3)</code> 线性分组码</h3>
+<div class="qa-grid">
+<section id="question-题目-7" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> Let the generator matrix of a <code>(6,3)</code>
+linear block code be</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+G=
+\begin{bmatrix}
+1&amp;0&amp;0&amp;1&amp;1&amp;0\\
+0&amp;1&amp;0&amp;0&amp;1&amp;1\\
+0&amp;0&amp;1&amp;1&amp;0&amp;1
+\end{bmatrix}.
+</annotation></semantics></math></p>
+<p>Please:</p>
+<ol type="1">
+<li>encode the message <code>M=(100)</code>,</li>
+<li>calculate the parity-check matrix <code>H</code>,</li>
+<li>if the received word is <code>(101111)</code> and the error weight
+is less than <code>2</code>, determine the transmitted LBC code.</li>
+</ol>
+<p><strong>中.</strong> 设 <code>(6,3)</code> 线性分组码的生成矩阵为</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+G=
+\begin{bmatrix}
+1&amp;0&amp;0&amp;1&amp;1&amp;0\\
+0&amp;1&amp;0&amp;0&amp;1&amp;1\\
+0&amp;0&amp;1&amp;1&amp;0&amp;1
+\end{bmatrix},
+</annotation></semantics></math></p>
+<p>求：</p>
+<ol type="1">
+<li>消息 <code>M=(100)</code> 的码字，</li>
+<li>监督矩阵 <code>H</code>，</li>
+<li>若收到码字 <code>(101111)</code>，且错误图样码重小于
+<code>2</code>，求发送的线性分组码码字。</li>
+</ol>
+</section>
+<section id="answer-答案-7" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Encoding / 编码</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo><mi>G</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>100110</mn><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+x=(100)G=(100110).
+</annotation></semantics></math></p>
+<p><strong>Parity-check matrix / 监督矩阵</strong></p>
+<p>Since</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+P=
+\begin{bmatrix}
+1&amp;1&amp;0\\
+0&amp;1&amp;1\\
+1&amp;0&amp;1
+\end{bmatrix},
+</annotation></semantics></math></p>
+<p>we have</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>=</mo><mo stretchy="false" form="prefix">[</mo><msup><mi>P</mi><mi>T</mi></msup><mo>∣</mo><msub><mi>I</mi><mn>3</mn></msub><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+H=[P^T\mid I_3]=
+\begin{bmatrix}
+1&amp;0&amp;1&amp;1&amp;0&amp;0\\
+1&amp;1&amp;0&amp;0&amp;1&amp;0\\
+0&amp;1&amp;1&amp;0&amp;0&amp;1
+\end{bmatrix}.
+</annotation></semantics></math></p>
+<p><strong>Syndrome decoding / 伴随式译码</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mi>w</mi><msup><mi>H</mi><mi>T</mi></msup><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>0</mn><msup><mo stretchy="false" form="postfix">)</mo><mi>T</mi></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
+S=wH^T=(1,0,0)^T.
+</annotation></semantics></math></p>
+<p>This syndrome equals the 4th column of <code>H</code>, so the error
+pattern is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>000100</mn><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+e=(000100).
+</annotation></semantics></math></p>
+<p>Hence the transmitted codeword is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>a</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>w</mi><mo>+</mo><mi>e</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>101111</mn><mo>+</mo><mn>000100</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>101011</mn><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+a&amp;=w+e\\
+ &amp;=101111+000100\\
+ &amp;=101011.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> The transmitted LBC code is
+<code>(101011)</code>.<br />
+<strong>中.</strong> 发送的线性分组码码字为 <code>(101011)</code>。</p>
+</section>
+</div>
+<h3
+id="iii.-another-63-linear-block-coding-problem-另一道-63-线性分组码题">III.
+Another <code>(6,3)</code> Linear Block Coding Problem / 另一道
+<code>(6,3)</code> 线性分组码题</h3>
+<div class="qa-grid">
+<section id="question-题目-8" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> Consider another <code>(6,3)</code> linear block
+coding problem from the review sheet. The original figure is preserved
+below.</p>
+<p><strong>中.</strong> 下面这道题是原卷中的另一道 <code>(6,3)</code>
+线性分组码题，原题图示保留下来如下。</p>
+<figure>
+<img src="qa_assets/image16.png" class="inline-figure"
+alt="Original figure from the source sheet / 原卷图示" />
+<figcaption aria-hidden="true">Original figure from the source sheet /
+原卷图示</figcaption>
+</figure>
+<p>The problem asks:</p>
+<ol type="1">
+<li>encode <code>u=[101]</code> into a codeword,</li>
+<li>determine the minimum Hamming distance,</li>
+<li>explain the error-detection capability.</li>
+</ol>
+</section>
+<section id="answer-答案-8" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Codeword / 码字</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mi>G</mi><mo>=</mo><mo stretchy="false" form="prefix">[</mo><mn>1</mn><mspace width="0.222em"></mspace><mn>0</mn><mspace width="0.222em"></mspace><mn>1</mn><mspace width="0.222em"></mspace><mn>1</mn><mspace width="0.222em"></mspace><mn>0</mn><mspace width="0.222em"></mspace><mn>1</mn><mo stretchy="false" form="postfix">]</mo><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">codeword</mtext><mo>=</mo><mn>101101</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
+uG=[1\ 0\ 1\ 1\ 0\ 1],
+\qquad
+\text{codeword}=101101.
+</annotation></semantics></math></p>
+<p><strong>Distance conclusion / 距离结论</strong></p>
+<p>The review sheet gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>=</mo><mn>2</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
+d_{\min}=2.
+</annotation></semantics></math></p>
+<p><strong>Detection ability / 检错能力</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mtext mathvariant="normal">detect up to </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>d</mi><mi mathvariant="normal">min</mi></msub><mo>−</mo><mn>1</mn><mo>=</mo><mn>1</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> error</mtext></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\text{detect up to }d_{\min}-1=1\text{ error}.
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> A code with minimum distance <code>2</code> can
+detect at most <code>1</code> error.<br />
+<strong>中.</strong> 最小距离为 <code>2</code> 的码最多可检测
+<code>1</code> 位错误。</p>
+<p><strong>Note / 说明</strong></p>
+<p>One handwritten note on the sheet conflicts with the formula. The
+defensible exam answer is the formula-based result above.<br />
+原卷手写批注中有一处与公式不一致；考试时应按标准公式给出上面的结果。</p>
+</section>
+</div>
+<h3 id="iv.-weather-and-health-天气与健康联合题">IV. Weather and Health
+/ 天气与健康联合题</h3>
+<div class="qa-grid">
+<section id="question-题目-9" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> The source <code>X</code> is the weather
+condition with states <code>{cold, comfy, cool}</code>, and the
+destination <code>Y</code> is the health state
+<code>{healthy, sick}</code>. The original sample table from the review
+sheet is shown below.</p>
+<p><strong>中.</strong> 信源 <code>X</code> 表示天气状态
+<code>{cold, comfy, cool}</code>，信宿 <code>Y</code> 表示健康状态
+<code>{healthy, sick}</code>。原题给出的样本表如下。</p>
+<figure>
+<img src="qa_assets/image18.png" class="inline-figure"
+alt="Original table from the source sheet / 原卷样本表" />
+<figcaption aria-hidden="true">Original table from the source sheet /
+原卷样本表</figcaption>
+</figure>
+<p>Please calculate:</p>
+<ol type="1">
+<li>the probability distributions of <code>X</code> and
+<code>Y</code>,</li>
+<li><code>H(X)</code> and <code>H(Y)</code>,</li>
+<li>the joint distribution and <code>H(X,Y)</code>,</li>
+<li><code>I(X;Y)</code>.</li>
+</ol>
+</section>
+<section id="answer-答案-9" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Marginal distributions / 边缘分布</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>P</mi><mi>X</mi></msub><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">cold</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>P</mi><mi>X</mi></msub><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">comfy</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>P</mi><mi>X</mi></msub><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">cool</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>5</mn><mn>12</mn></mfrac><mo>,</mo></mtd></mtr></mtable><mspace width="2.0em"></mspace><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>P</mi><mi>Y</mi></msub><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">healthy</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>P</mi><mi>Y</mi></msub><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">sick</mtext><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mi>.</mi></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">
+\begin{aligned}
+P_X(\text{cold})&amp;=\frac14,\\
+P_X(\text{comfy})&amp;=\frac13,\\
+P_X(\text{cool})&amp;=\frac{5}{12},
+\end{aligned}
+\qquad
+\begin{aligned}
+P_Y(\text{healthy})&amp;=\frac23,\\
+P_Y(\text{sick})&amp;=\frac13.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Entropies / 熵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>1.5546</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mo>,</mo><mspace width="2.0em"></mspace><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0.9183</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mrow><annotation encoding="application/x-tex">
+H(X)=1.5546\ \text{bit/symbol},
+\qquad
+H(Y)=0.9183\ \text{bit/symbol}.
+</annotation></semantics></math></p>
+<p><strong>Joint distribution / 联合分布</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"></th>
+<th style="text-align: right;">cold</th>
+<th style="text-align: right;">comfy</th>
+<th style="text-align: right;">cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">healthy</td>
+<td style="text-align: right;">1/6</td>
+<td style="text-align: right;">1/4</td>
+<td style="text-align: right;">1/4</td>
+</tr>
+<tr>
+<td style="text-align: right;">sick</td>
+<td style="text-align: right;">1/12</td>
+<td style="text-align: right;">1/12</td>
+<td style="text-align: right;">1/6</td>
+</tr>
+</tbody>
+</table>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>2.4591</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mrow><annotation encoding="application/x-tex">
+H(X,Y)=2.4591\ \text{bit/symbol}.
+</annotation></semantics></math></p>
+<p><strong>Mutual information / 互信息</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>I</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>;</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.5546</mn><mo>+</mo><mn>0.9183</mn><mo>−</mo><mn>2.4591</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.0138</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+I(X;Y)
+&amp;=H(X)+H(Y)-H(X,Y)\\
+&amp;=1.5546+0.9183-2.4591\\
+&amp;=0.0138\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> The dependence between weather and health is
+very weak in this sample.<br />
+<strong>中.</strong> 从该样本看，天气与健康之间的相关性非常弱。</p>
+</section>
+</div>
+<h3 id="v.-study-habits-markov-chain-学习习惯-markov-链">V. Study Habits
+Markov Chain / 学习习惯 Markov 链</h3>
+<div class="qa-grid">
+<section id="question-题目-10" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> A student’s study habits follow a Markov chain
+with two states: <code>Focused (F)</code> and
+<code>Distracted (D)</code>. The original figure is shown below.</p>
+<p><strong>中.</strong> 某学生的学习习惯服从一个两状态 Markov 链，状态为
+<code>Focused (F)</code> 与
+<code>Distracted (D)</code>。原题图示如下。</p>
+<figure>
+<img src="qa_assets/image22.png" class="inline-figure"
+alt="Original figure from the source sheet / 原卷图示" />
+<figcaption aria-hidden="true">Original figure from the source sheet /
+原卷图示</figcaption>
+</figure>
+<p>The recoverable transition matrix is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.7</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P=
+\begin{bmatrix}
+0.7 &amp; 0.3\\
+0.4 &amp; 0.6
+\end{bmatrix}.
+</annotation></semantics></math></p>
+<p>Please:</p>
+<ol type="1">
+<li>calculate the Jensen-Shannon divergence of <code>(0.7,0.3)</code>
+and <code>(0.4,0.6)</code>,</li>
+<li>find the stationary distribution,</li>
+<li>calculate the limiting entropy.</li>
+</ol>
+</section>
+<section id="answer-答案-10" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>JS divergence / JS 散度</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mi>S</mi><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><mo stretchy="false" form="prefix">(</mo><mn>0.7</mn><mo>,</mo><mn>0.3</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mo>=</mo><mn>0.0462</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mrow><annotation encoding="application/x-tex">
+JS\big((0.7,0.3),(0.4,0.6)\big)=0.0462\ \text{bit/symbol}.
+</annotation></semantics></math></p>
+<p><strong>Stationary distribution / 平稳分布</strong></p>
+<p>Let <code>\pi=(\pi_F,\pi_D)</code>. Then</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mi>π</mi><mi>P</mi><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>π</mi><mi>F</mi></msub><mo>+</mo><msub><mi>π</mi><mi>D</mi></msub><mo>=</mo><mn>1</mn><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\pi=\pi P,\qquad \pi_F+\pi_D=1,
+</annotation></semantics></math></p>
+<p>which gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>4</mn><mn>7</mn></mfrac><mo>,</mo><mfrac><mn>3</mn><mn>7</mn></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\pi=\left(\frac47,\frac37\right).
+</annotation></semantics></math></p>
+<p><strong>Limiting entropy / 极限熵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>H</mi><mi>∞</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mn>4</mn><mn>7</mn></mfrac><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mn>0.7</mn><mo>,</mo><mn>0.3</mn><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mfrac><mn>3</mn><mn>7</mn></mfrac><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.6</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.9199</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+H_{\infty}
+&amp;=\frac47 H(0.7,0.3)+\frac37 H(0.4,0.6)\\
+&amp;=0.9199\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> The stationary distribution is
+<code>(4/7, 3/7)</code> and the limiting entropy is
+<code>0.9199 bit/symbol</code>.<br />
+<strong>中.</strong> 平稳分布为 <code>(4/7, 3/7)</code>，极限熵为
+<code>0.9199 bit/symbol</code>。</p>
+</section>
+</div>
+<h3 id="vi.-medical-ai-quasi-symmetric-channel-医疗-ai-准对称信道">VI.
+Medical AI Quasi-Symmetric Channel / 医疗 AI 准对称信道</h3>
+<div class="qa-grid">
+<section id="question-题目-11" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> A medical AI system classifies chest X-ray
+images into three categories: <code>Healthy (H)</code>,
+<code>Pneumonia (P)</code>, and <code>Uncertain (U)</code>. The original
+figure is shown below.</p>
+<p><strong>中.</strong> 一个医疗 AI 系统将胸片分为
+<code>Healthy (H)</code>、<code>Pneumonia (P)</code> 和
+<code>Uncertain (U)</code> 三类。原题图示如下。</p>
+<figure>
+<img src="qa_assets/image26.png" class="inline-figure"
+alt="Original figure from the source sheet / 原卷图示" />
+<figcaption aria-hidden="true">Original figure from the source sheet /
+原卷图示</figcaption>
+</figure>
+<p>Please:</p>
+<ol type="1">
+<li>calculate the channel capacity <code>C</code>,</li>
+<li>explain whether swapping <code>0.2</code> and <code>0.7</code>
+changes the capacity.</li>
+</ol>
+</section>
+<section id="answer-答案-11" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Capacity / 容量</strong></p>
+<p>The review sheet gives the quasi-symmetric channel computation</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>C</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>2</mn><mo>−</mo><mo stretchy="false" form="prefix">(</mo><mn>0.9</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.9</mn><mo>+</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo stretchy="false" form="postfix">)</mo><mo>−</mo><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mn>0.7</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1</mn><mo>+</mo><mn>0.369</mn><mo>−</mo><mn>1.1568</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.2122</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+C
+&amp;=\log 2-(0.9\log 0.9+0.1\log 0.2)-H(0.7,0.2,0.1)\\
+&amp;=1+0.369-1.1568\\
+&amp;=0.2122\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Mechanism after swapping <code>0.2</code> and
+<code>0.7</code> / 将 <code>0.2</code> 与 <code>0.7</code>
+对调后的结论</strong></p>
+<p><strong>EN.</strong> The capacity remains unchanged, because only the
+positions of probabilities change, while the quasi-symmetric subchannel
+structure remains the same.</p>
+<p><strong>中.</strong>
+容量保持不变，因为变化的只是概率位置，准对称子信道的结构不变。</p>
+</section>
+</div>
+<h3 id="vii.-sensor-huffman-coding-传感器-huffman-编码">VII. Sensor
+Huffman Coding / 传感器 Huffman 编码</h3>
+<div class="qa-grid">
+<section id="question-题目-12" class="qa-card question-card">
+<h4>Question / 题目</h4>
+<p><strong>EN.</strong> A sensor transmits four types of signals
+<code>{A,B,C,D}</code> with probabilities</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo>,</mo><mi>C</mi><mo>,</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.3</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(A,B,C,D)=(0.4,0.3,0.2,0.1).
+</annotation></semantics></math></p>
+<p>The original figure is shown below.</p>
+<p><strong>中.</strong> 某传感器发送四类信号
+<code>{A,B,C,D}</code>，其概率分布为</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>B</mi><mo>,</mo><mi>C</mi><mo>,</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>0.4</mn><mo>,</mo><mn>0.3</mn><mo>,</mo><mn>0.2</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P(A,B,C,D)=(0.4,0.3,0.2,0.1).
+</annotation></semantics></math></p>
+<p>原题图示如下。</p>
+<figure>
+<img src="qa_assets/image28.png" class="inline-figure"
+alt="Original figure from the source sheet / 原卷图示" />
+<figcaption aria-hidden="true">Original figure from the source sheet /
+原卷图示</figcaption>
+</figure>
+<p>Please:</p>
+<ol type="1">
+<li>provide the Huffman code,</li>
+<li>calculate the average code length,</li>
+<li>calculate the coding efficiency.</li>
+</ol>
+</section>
+<section id="answer-答案-12" class="qa-card answer-card">
+<h4>Answer / 答案</h4>
+<p><strong>Huffman code / Huffman 码</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>A</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>B</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>01</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>C</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>000</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>D</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>→</mo><mn>001</mn></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+A&amp;\to 1\\
+B&amp;\to 01\\
+C&amp;\to 000\\
+D&amp;\to 001
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Average code length / 平均码长</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>L</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>0.4</mn><mo>⋅</mo><mn>1</mn><mo>+</mo><mn>0.3</mn><mo>⋅</mo><mn>2</mn><mo>+</mo><mn>0.2</mn><mo>⋅</mo><mn>3</mn><mo>+</mo><mn>0.1</mn><mo>⋅</mo><mn>3</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.9</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+L
+&amp;=0.4\cdot 1+0.3\cdot 2+0.2\cdot 3+0.1\cdot 3\\
+&amp;=1.9\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Entropy / 熵</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>−</mi><mn>0.4</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.4</mn><mo>−</mo><mn>0.3</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.3</mn><mo>−</mo><mn>0.2</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.2</mn><mo>−</mo><mn>0.1</mn><mrow><mi mathvariant="normal">log</mi><mo>&#8289;</mo></mrow><mn>0.1</mn></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mn>1.8464</mn><mspace width="0.222em"></mspace><mtext mathvariant="normal">bit/symbol</mtext><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+H(X)
+&amp;=-0.4\log 0.4-0.3\log 0.3-0.2\log 0.2-0.1\log 0.1\\
+&amp;=1.8464\ \text{bit/symbol}.
+\end{aligned}
+</annotation></semantics></math></p>
+<p><strong>Coding efficiency / 编码效率</strong></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>=</mo><mfrac><mrow><mi>H</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><mi>L</mi></mfrac><mo>×</mo><mn>100</mn><mi>%</mi><mo>=</mo><mfrac><mn>1.8464</mn><mn>1.9</mn></mfrac><mo>×</mo><mn>100</mn><mi>%</mi><mo>=</mo><mn>97.18</mn><mi>%</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\eta=\frac{H(X)}{L}\times 100\%=\frac{1.8464}{1.9}\times 100\%=97.18\%.
+</annotation></semantics></math></p>
+<p><strong>EN.</strong> The average code length is
+<code>1.9 bit/symbol</code> and the coding efficiency is
+<code>97.18%</code>.<br />
+<strong>中.</strong> 平均码长为 <code>1.9 bit/symbol</code>，编码效率为
+<code>97.18%</code>。</p>
+</section>
+</div>
+</body>
+</html>
